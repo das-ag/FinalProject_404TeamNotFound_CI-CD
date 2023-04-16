@@ -26,7 +26,7 @@ jobs:
         run: sudo apt-get install -y libsdl2-dev
       - name: build project code
         run: cd ./FinalProject/graphics_project && dub build 
-      - name: Setup headless x11 window
-        run: sudo apt-get install xvfb xorg xauth openbox lib32z1 # xorg is needed to set DISPLAY variable later
+      - name: Setup SDL
+        run: sudo apt-get install xvfb xorg xauth openbox lib32z1 lib32ncurses5 lib32bz2-1.0 # xorg is needed to set DISPLAY variable later
       - name: run tests
         run: cd ./FinalProject/graphics_project && dub test
