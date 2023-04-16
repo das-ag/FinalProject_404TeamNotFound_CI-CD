@@ -1,0 +1,56 @@
+{
+	"authors": [
+		"Agastya Das",
+		"Heekyung Kim",
+		"Roydon Pereira",
+		"Jake Stringfellow",
+		"Jiayue Zhao"
+	],
+	"configurations": [
+		{
+			"name": "Client",
+			"mainSourceFile": "source/client.d",
+			"targetType": "executable",
+			"targetName": "client"
+		},
+		{
+			"name": "Server",
+			"mainSourceFile": "server/server.d",
+			"targetName": "server",
+			"excludedSourceFiles": [
+				"source/app.d",
+				"source/SDLApp.d"
+			],
+			"targetType": "executable"
+		},
+		{
+			"name": "executable",
+			"targetType": "executable"
+		},
+		{
+			"dependencies": {
+				"bindbc-sdl": "~>1.2.4",
+				"bindbc-loader": "1.0.1",
+				"unit-threaded": "~>2.1.2"
+			},
+			"excludedSourceFiles": [
+				"source/app.d"
+			],
+			"mainSourceFile": "source/client.d",
+			"name": "unittest",
+			"preBuildCommands": [
+				"dub run unit-threaded -c gen_ut_main -- -f bin/ut.d -d dub"
+			],
+			"targetType": "executable"
+		}
+	],
+	"copyright": "Copyright © 2023, Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao",
+	"dependencies": {
+		"bindbc-sdl": "~>1.2.4"
+	},
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "graphics_project",
+	"targetPath": "bin",
+	"targetType": "executable"
+}

@@ -1,0 +1,8 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"bindbc-loader": "1.0.1",
+		"bindbc-sdl": "1.2.4",
+		"unit-threaded": "2.1.2"
+	}
+}
