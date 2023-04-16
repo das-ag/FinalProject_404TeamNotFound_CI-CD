@@ -27,6 +27,6 @@ jobs:
       - name: build project code
         run: cd ./FinalProject/graphics_project && dub build 
       - name: Setup headless x11 window
-        run: sudo apt-get install xvfb xorg xauth openbox # xorg is needed to set DISPLAY variable later
+        run: sudo apt-get install xvfb xorg xauth openbox ia32-libs # xorg is needed to set DISPLAY variable later
       - name: run tests
         run: cd ./FinalProject/graphics_project && dub test
