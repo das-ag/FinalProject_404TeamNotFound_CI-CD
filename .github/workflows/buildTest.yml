@@ -6,7 +6,7 @@ name: DLang CI
 # in this case, the master branch, although you could add others.
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 # Every github action needs at least one job.
 # We could have multiple jobs, but for now I am only going to include one here.
