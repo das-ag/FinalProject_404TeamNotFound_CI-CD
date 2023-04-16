@@ -26,3 +26,4 @@ unittest{
     assert(c.width != 600);
     destroy(c);
 }
+
