@@ -31,7 +31,7 @@
 			"dependencies": {
 				"bindbc-sdl": "~>1.2.4",
 				"bindbc-loader": "1.0.1",
-				"unit-threaded": "~>2.1.2"
+				"unit-threaded": "~>2.1.5"
 			},
 			"excludedSourceFiles": [
 				"source/app.d"
@@ -39,7 +39,7 @@
 			"mainSourceFile": "source/client.d",
 			"name": "unittest",
 			"preBuildCommands": [
-				"dub run unit-threaded -c gen_ut_main -- -f bin/ut.d -d dub"
+				"dub run unit-threaded --compiler=ldc2 -c gen_ut_main -- -f bin/ut.d -d dub"
 			],
 			"targetType": "executable"
 		}
@@ -51,6 +51,7 @@
 	"description": "A minimal D application.",
 	"license": "proprietary",
 	"name": "graphics_project",
+	
 	"targetPath": "bin",
 	"targetType": "executable"
 }

@@ -1,3 +1,5 @@
+module Surface;
+
 import std.stdio;
 import std.typecons: tuple, Tuple;
 
@@ -46,9 +48,9 @@ struct Surface{
   	// Check a pixel color
   	Tuple!(int, int, int) getPixel(int xPos, int yPos){
         ubyte* pixelArray = cast(ubyte*)mSurface.pixels;
-        int r = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+0];
+        int b = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+0];
         int g = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+1];
-        int b = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+2];
+        int r = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+2];
 
         auto t = tuple(r, g, b);
         return t;
