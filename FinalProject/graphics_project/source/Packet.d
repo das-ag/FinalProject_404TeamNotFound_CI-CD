@@ -22,7 +22,7 @@ struct Packet {
 
 
 	/**
-    Converts Packet into an array of bytes for serialization
+    Method that converts Packet into an array of bytes for serialization
     Returns: an array of bytes that are serialized
     */
     byte[Packet.sizeof] GetPacketAsBytes(){

@@ -28,8 +28,8 @@ import DrawStrategy : DrawStrategy, DrawSquareStrategy, DrawCircleStrategy, Draw
 
 
 /***
- * Class that runs the drawing application on the client side.
- * It connects to server upon user's request and runs the gui for the application.
+ Class that runs the drawing application on the client side.
+ It connects to server upon user's request and runs the gui for the application.
  */
 class Client {
     SDLSupport ret;        /// SDL initializer that loads libraries based on user's OS
@@ -58,6 +58,11 @@ class Client {
     bool isConnectedToServer = false;   /// Flag to check if server is connected
     bool runApplication;                /// Flag to check if application is running
 
+
+
+    /** 
+     Constructs Client class.
+     */
  	 this(){
         // Handle initialization...
         // SDL_Init
@@ -104,6 +109,9 @@ class Client {
  	}
  	
     
+    /** 
+     Destructs Client class
+     */
     ~this(){
         // Quit the SDL Application 
         destroy(winSurface);
@@ -717,7 +725,6 @@ class Client {
 
             // Blit the surace (i.e. update the window with another surfaces pixels
             //                       by copying those pixels onto the window).
-            // TODO: make method in Surface
             SDL_BlitSurface(winSurface.mSurface, null, window.getWindowSurface(), null);
             SDL_BlitSurface(winSurface.btnSurface, null, window.getWindowSurface(), &buttonDestRect);
             

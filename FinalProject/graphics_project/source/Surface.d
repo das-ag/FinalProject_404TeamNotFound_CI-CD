@@ -22,7 +22,14 @@ struct Surface{
     int btn_height; /// height of buttons
     
 
-    this(int _width, int _height, int _btn_height, ) {
+    /** 
+    Constructs Surface Class
+    Params:
+      _width = width of surface
+      _height = height of surface
+      _btn_height = height of button
+    */
+    this(int _width, int _height, int _btn_height) {
       width = _width;
       height = _height;
       btn_height = _btn_height;
@@ -30,7 +37,9 @@ struct Surface{
       this.btnSurface = SDL_CreateRGBSurface(0,width,btn_height,32,0,0,0,0);
   	}
 
-
+    /**
+    Destructs Surface class
+    */
   	~this(){
   		SDL_FreeSurface(mSurface);
       SDL_FreeSurface(btnSurface);
@@ -38,7 +47,7 @@ struct Surface{
 
 
 	  /**
-    Updates color of pixel at a given x, y coordinate on the drawing surface.
+    Method that updates color of pixel at a given x, y coordinate on the drawing surface.
     Params:
         xPos = position of x coordinate to update the pixel
         yPos = position of y coordinate to update the pixel
@@ -65,7 +74,7 @@ struct Surface{
   	
 
   	/**
-    Checks rgb value of a pixel at a given x,y coordinate
+    Method that checks rgb value of a pixel at a given x,y coordinate
      Params:
         xPos = position of x coordinate of pixel to check the color 
         yPos = position of y coordinate of pixel to check the color 

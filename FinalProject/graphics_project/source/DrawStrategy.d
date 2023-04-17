@@ -192,7 +192,6 @@ class EraseStrategy : DrawStrategy {
         b = b value of rgb to erase the pixel - fixed to 0
         brushSize = size of square to erase around the given pixel
     */
-
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
 
         r = 0;

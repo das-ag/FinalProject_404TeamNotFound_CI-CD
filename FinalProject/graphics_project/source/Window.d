@@ -14,6 +14,13 @@ struct Window{
     int width;  /// width of window
     int height; /// height of window
     
+    /** 
+    Constructs Window struct
+    Params:
+        name = name of window
+        _width = width of window
+        _height = height of window
+     */
     this(const(char)* name, int _width, int _height,) {
         width = _width;
         height = _height;
@@ -25,13 +32,16 @@ struct Window{
                                             SDL_WINDOW_SHOWN);
   	}
 
+    /** 
+    Destructs Window class.
+    */
     ~this(){
         SDL_DestroyWindow(mWindow);
     }
 
 
 	/**
-    Gets window of the struct
+    Method that gets window of the struct
     Returns: window
     */
     SDL_Surface* getWindowSurface(){
@@ -40,7 +50,7 @@ struct Window{
 
 
 	/**
-    Updates window of the struct
+    Method that updates window of the struct
     Returns: window
     */
     void updateWindowSurface(){

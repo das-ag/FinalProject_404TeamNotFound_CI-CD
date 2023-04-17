@@ -106,7 +106,7 @@ class TCPServer{
 	
 
 	/**
-	Function that is spawned to listen and broadcast data recevied from client
+	Method that is spawned to listen and broadcast data recevied from client
 	Params:
 		clientSocket = Socket to listen and broadcast to client
 	*/
@@ -215,7 +215,7 @@ class TCPServer{
 	}
 
 	/** 
-	 Function that broadcasts packets to all the clients that are currently connected.
+	 Method that broadcasts packets to all the clients that are currently connected.
 	 */
 	void broadcastToAllClients(){
 		foreach(idx, serverToClient; mClientsConnectedToServer){
