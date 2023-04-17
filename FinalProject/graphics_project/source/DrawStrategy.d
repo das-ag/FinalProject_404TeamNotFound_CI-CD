@@ -1,14 +1,51 @@
+/***
+ * This code contains interface and classes for creating various paint brush styles. 
+ * It follows factory design pattern.
+ */
+
 module DrawStrategy;
 import Surface : Surface;
 import std.math;
 
+
+/**
+Interface for classes that implement paint brush types.
+*/
 interface DrawStrategy
 {
+    /**
+    Draws pixels based on paint brush type
+
+    Params:
+        winSurface = pointer to the SDL app surface to draw the pixels
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushSize = size of brush to draw the pixel
+    */
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize);
 }
 
+
+/**
+Class that draws square shaped paint brush
+*/
 class DrawSquareStrategy : DrawStrategy {
 
+    /**
+    Draws square around a given x, y coordinate.
+
+    Params:
+        winSurface = pointer to the SDL app surface to draw the pixels
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushSize = size of square to draw around the given pixel
+    */
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
         for(int w = -brushSize; w < brushSize; w++)
         {
@@ -21,9 +58,23 @@ class DrawSquareStrategy : DrawStrategy {
 }
 
 
-
+/**
+Class that draws circle shaped paint brush
+*/
 class DrawCircleStrategy : DrawStrategy {
 
+    /**
+    Draws circle around a given x, y coordinate.
+
+    Params:
+        winSurface = pointer to the SDL app surface to draw the pixels
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushSize = size of circle to draw around the given pixel
+    */
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
     {
         for(int y1 =- brushSize; y1 <= brushSize; y1++) 
@@ -39,7 +90,23 @@ class DrawCircleStrategy : DrawStrategy {
     }
 }
 
+
+/**
+Class that draws heart shaped paint brush
+*/
 class DrawHeartStrategy : DrawStrategy {
+    /**
+    Draws heart around a given x, y coordinate.
+
+    Params:
+        winSurface = pointer to the SDL app surface to draw the pixels
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushSize = size of heart to draw around the given pixel
+    */
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
     {
         for(int x1= -3 * brushSize / 2; x1 <= brushSize; x1++) 
@@ -57,7 +124,24 @@ class DrawHeartStrategy : DrawStrategy {
     }
 }
 
+
+/**
+Class that draws spiral shaped paint brush
+*/
 class DrawSpiralStrategy: DrawStrategy {
+
+    /**
+    Draws spiral pattern around a given x, y coordinate.
+
+    Params:
+        winSurface = pointer to the SDL app surface to draw the pixels
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushSize = size of spiral to draw around the given pixel
+    */
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
         for (int y = 0; y < brushSize * 2; ++y)
         {
@@ -89,10 +173,28 @@ class DrawSpiralStrategy: DrawStrategy {
     }
 }
 
+
+/**
+Class that erases pixels
+*/
 class EraseStrategy : DrawStrategy {
 
+    /**
+    Erases pixels around a given x, y coordinate.
+    Eraser is in the shape of a square.
+
+    Params:
+        winSurface = pointer to the SDL app surface to erase the pixels
+        xPos = position of x coordinate to erase the pixel
+        yPos = position of y coordinate to erase the pixel
+        r = r value of rgb to erase the pixel - fixed to 0
+        g = g value of rgb to erase the pixel - fixed to 0
+        b = b value of rgb to erase the pixel - fixed to 0
+        brushSize = size of square to erase around the given pixel
+    */
+
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
-        brushSize = 6;
+
         r = 0;
         g = 0;
         b = 0;
