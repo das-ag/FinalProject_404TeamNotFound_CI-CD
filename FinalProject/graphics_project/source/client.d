@@ -334,7 +334,9 @@ class Client {
     }
 
 
-
+     /**
+    Method that creates the buttons on the upper margin of the window surface.
+    */
     void createButtons(){
         // Create the destination rectangles:
         // ImgDestRect is the destination rect for image surface aka the canvas
@@ -349,84 +351,84 @@ class Client {
         buttonDestRect.w = width;    // Use the surface2 width
         buttonDestRect.h = btn_height;    // Use the surface2 height
         
-        // button for changing color to Red
+        // create a button for changing color to Red
         SDL_Color HoverColor = { to!ubyte(255), to!ubyte(0), to!ubyte(0), 255 };
         SDL_Rect rect = SDL_Rect(0*width/btn_count, 5, width/btn_count, btn_height);
         uint mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor.r, HoverColor.g, HoverColor.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // button for changing color to Green
+        // create a button for changing color to Green
         SDL_Color HoverColor2 = { to!ubyte(0), to!ubyte(255), to!ubyte(0), 255 };
         rect = SDL_Rect(1*width/btn_count, 5, width/btn_count, btn_height);
         mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor2.r, HoverColor2.g, HoverColor2.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // button for changing color to Blue
+        // create a button for changing color to Blue
         SDL_Color HoverColor3 = { to!ubyte(0), to!ubyte(0), to!ubyte(255), 255 };
         rect = SDL_Rect(2*width/btn_count, 5, width/btn_count, btn_height);
         mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor3.r, HoverColor3.g, HoverColor3.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // button for changing brush type to Square
+        // create a button for changing brush type to Square
         SDL_Rect imgRect;
-        imgRect.x = 3*width/btn_count; 
-        imgRect.y = 5;
-        imgRect.w = width;
-        imgRect.h = btn_height; 
+        imgRect.x = 3*width/btn_count;  // defines the starting x coordiate position of the button
+        imgRect.y = 5; // defines the starting y coordiate position of the button
+        imgRect.w = width; // defines the width of the button
+        imgRect.h = btn_height; // defines the height of the button
         SDL_Surface* imgBtnSurface = SDL_LoadBMP("source/images/square_brush.bmp");
         rect = SDL_Rect(3*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for changing brush type to circle
+        // create a button for changing brush type to circle
         imgRect.x = 4*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/round_brush.bmp");
         rect = SDL_Rect(4*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for changing brush type to hearts
+        // create a button for changing brush type to hearts
         imgRect.x = 5*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/heart_brush.bmp");
         rect = SDL_Rect(5*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for changing brush type to spiral
+        // create a button for changing brush type to spiral
         imgRect.x = 6*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/spiral_brush.bmp");
         rect = SDL_Rect(6*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for increasing brush size
+        // create a button for increasing brush size
         imgRect.x = 7*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/brush_up.bmp");
         rect = SDL_Rect(7*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for decreasing brush size
+        // create a button for decreasing brush size
         imgRect.x = 8*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/brush_down.bmp");
         rect = SDL_Rect(8*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for undo
+        // create a button for undo
         imgRect.x = 9*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/undo_button.bmp");
         rect = SDL_Rect(9*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for redo
+        // create a button for redo
         imgRect.x = 10*width/btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/redo_button.bmp");
         rect = SDL_Rect(10*width/btn_count, 5, width/btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // button for eraser
+        // create a button for eraser
         imgRect.x = 11*width/btn_count;
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/eraser.bmp");
@@ -434,8 +436,16 @@ class Client {
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
     }
 
+    /**
+    Method that selects an operation to be performed based on the button that is clicked.
+    Params:
+        xPos = position of x coordinate of the mouse click
+        yPos = position of y coordinate of the mouse click
+    */
     void ifButtonsClicked(int xPos, int yPos){
+        // check if the mouse click is within the boundaries of the button surface
         if (findPoint(0, 0, width, btn_height, xPos, yPos)){
+            // Select the operation to be performed based on the position of the mouse click
             switch(xPos / (width/btn_count) ){
                 case 0:
                     writeln("Brush Color changed to: RED!!!!");
@@ -513,8 +523,21 @@ class Client {
     }
 
 
+    /**
+    Method that checks if the mouse click is within the boundaries of the button surface
+    Params:
+        x1 = position of the starting x coordinate of button surface
+        y1 = position of the starting y coordinate of button surface
+        x2 = position of the ending x coordinate of button surface
+        y2 = position of the ending y coordinate of button surface
+        x = position of x coordinate of the mouse click
+        y = position of y coordinate of the mouse click
+    Returns: True if mouse click is on button surface, else false.
+    */
     bool findPoint(int x1, int y1, int x2, int y2, int x, int y)
     {
+        // If the mouse click is within the boundaries of button surface,
+        // then return true, else return false.
         if (x > x1 && x < x2 && y > y1 && y < y2){
             writeln("button clicked!!!!");
             return true;
