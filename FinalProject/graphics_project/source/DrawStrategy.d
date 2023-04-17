@@ -1,5 +1,5 @@
 /***
- * This code contains interface and classes for creating various paint brush styles. 
+ * Interface and classes for creating various paint brush styles. 
  * It follows factory design pattern.
  */
 
