@@ -89,4 +89,21 @@ struct Surface{
         auto t = tuple(r, g, b);
         return t;
     }
+
+  	/**
+    Method that checks rgb value of a pixel at a given x,y coordinate for the btn surface
+     Params:
+        xPos = position of x coordinate of pixel to check the color 
+        yPos = position of y coordinate of pixel to check the color 
+    Returns: Tuple that contains r, g, b values
+    */
+        Tuple!(int, int, int) getbtnPixel(int xPos, int yPos){
+        ubyte* pixelArray = cast(ubyte*)btnSurface.pixels;
+        int r = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+0];
+        int g = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+1];
+        int b = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+2];
+
+        auto t = tuple(r, g, b);
+        return t;
+    }
   }
