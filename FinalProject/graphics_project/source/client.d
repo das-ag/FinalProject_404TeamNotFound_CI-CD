@@ -1,3 +1,8 @@
+/***
+ * Class that runs the drawing application on the client side.
+ * It connects to server and runs the gui for the application.
+ */
+
 module client;
 
 import std.stdio;
@@ -21,33 +26,37 @@ import Window : Window;
 import Packet: Packet;
 import DrawStrategy : DrawStrategy, DrawSquareStrategy, DrawCircleStrategy, DrawHeartStrategy, DrawSpiralStrategy, EraseStrategy;
 
+
+/***
+ * Class that runs the drawing application on the client side.
+ * It connects to server upon user's request and runs the gui for the application.
+ */
 class Client {
-    SDLSupport ret;        
-    int width = 640;
-    int height = 480;
-    Socket mSocket;
-    Window window; 
-    Surface winSurface;
+    SDLSupport ret;        /// SDL initializer that loads libraries based on user's OS
+    int width = 640;       /// Width of window to run the gui
+    int height = 480;      /// Height of window to run the gui
+    Socket mSocket;        /// Socket to receive and send packets to server
+    Window window;         /// Window to display gui
+    Surface winSurface;    /// Surface to draw pixels (gui)
 
-    SDL_Rect imgDestRect;
-    SDL_Rect buttonDestRect;
+    SDL_Rect imgDestRect;    /// Image to overaly onto the buttons
+    SDL_Rect buttonDestRect; /// A Button on the tool bar
 
-    int btn_height = 50;
-    int btn_count = 12;
+    int btn_height = 50;   /// Height of buttons
+    int btn_count = 12;    /// Number of buttons on the toolbar
 
-    const ubyte MAX_BRUSH_SIZE = 10;
-    const ubyte MIN_BRUSH_SIZE = 4;
-    ubyte brushSize = 4;
-    ubyte brushStrokeType = 0;
-    ubyte prevBrushStroketype = 0;
-    ubyte _r = 255;
-    ubyte _g = 0;
-    ubyte _b = 0;
+    const ubyte MAX_BRUSH_SIZE = 10;    /// Maximum size of brush that users can increase
+    const ubyte MIN_BRUSH_SIZE = 4;     /// Minimum size of brush that users can decrease
+    ubyte brushSize = 4;                /// size of brush (default is 4) 
+    ubyte brushStrokeType = 0;          /// Type of paint brush (e.g. circle, heart) - default is square
+    ubyte prevBrushStroketype = 0;      /// Variable to save previous paint brush type
+    ubyte _r = 255;                     /// r value of current brush
+    ubyte _g = 0;                       /// g value of current brush
+    ubyte _b = 0;                       /// b value of current brush
 
-    Thread receiveThread; 
-    bool isConnectedToServer = false; 
-    bool runApplication;
-    string clientName;
+    Thread receiveThread;               /// Thread for receiving packets from server
+    bool isConnectedToServer = false;   /// Flag to check if server is connected
+    bool runApplication;                /// Flag to check if application is running
 
  	 this(){
         // Handle initialization...
@@ -89,7 +98,6 @@ class Client {
         }        
 
         mSocket = new Socket(AddressFamily.INET, SocketType.STREAM);
-
         window = Window("D SDL Painting", width, height);
         winSurface = Surface(width, height, btn_height);
 
@@ -105,7 +113,11 @@ class Client {
     }
 
 
-    /// Method that is spawned to receive data from server
+    /**
+    Method that is spawned to receive packets from server
+    Params:
+        socket = Socket to listen from server
+    */
     void receiveDataFromServer(shared Socket socket) {
 
         byte[] dummyBuffer = [];
@@ -137,8 +149,8 @@ class Client {
 
             writeln("acutal bytes: ", actualReceivedBytes);
     
-            // check if all the bytes are received
-            // If not save bytes to a dummy buffer until 
+            // check if all the bytes are received from server
+            // if not save bytes to a dummy buffer until 
             // all the bytes are received
             if (actualReceivedBytes > 0) {
 
@@ -198,6 +210,7 @@ class Client {
                 writeln("brushType: ", rBrushType);
                 writeln("brushSize: ", rBrushSize);
 
+                // draw pixels onto the surface of gui based on information unpacked from packet
                 draw(rX, rY, rRed, rGreen, rBlue, rBrushType, rBrushSize);            
         }
 
@@ -205,31 +218,47 @@ class Client {
 
     }
 
-    /// This is a helper method that changes size of brush
+    /**
+    Helper method that changes the size of the brush    
+    Params:
+        amount = amount to change the brush size
+    */
     void changeBrushSize(int amount) {
         brushSize += amount;
 
+        // constrain the max size of brush to 10
         if (brushSize > MAX_BRUSH_SIZE) 
         {
             brushSize = MAX_BRUSH_SIZE;
         }
         
+        // constrain the min size of brush to 4
         if (brushSize < MIN_BRUSH_SIZE) 
         {
             brushSize = MIN_BRUSH_SIZE;
         }
     }
 
+
+    /**
+    Method that erases pixels on the gui.
+    */
     void erase() {
+        // Save previous paint brush type
         if (brushStrokeType != 4) {
             prevBrushStroketype = brushStrokeType;
-            writeln(prevBrushStroketype);
         }
-        // Set the brush stroke to erase
+
+        // Set the paint brush type to eraser
         brushStrokeType = 4;
     }
 
-    /// This is a helper method that changes color of brush
+
+    /**
+    Helper method that changes color of paint brush
+    Params:
+        color = identifier for color (red = 1, green = 2, blue = 3)
+    */
     void changeBrushColor(int color) {
 
         final switch (color) 
@@ -248,9 +277,18 @@ class Client {
                 _r = 0;
                 _g = 0;
                 _b = 255;
+                break;
         }
     }
 
+
+    /**
+    Method that creates instances of paint brush classes.
+    Based on factory design pattern.
+    Params:
+        strokeType = identifier for paint brush (square = 0, 1 = circle, 2 = heart, 3 = spiral, 4 = eraser)
+    Returns: DrawStrategy class based on parameter
+    */
    DrawStrategy createDrawingStrategy(ubyte strokeType) {
         final switch (strokeType) {
             case 0:
@@ -266,10 +304,28 @@ class Client {
         }
     }
 
+
+    /**
+    Method that draws pixel on x, y coordinate based on given color, paint brush type, and brush size
+    This method uses factory design pattern.
+    Params:
+        xPos = position of x coordinate to draw the pixel
+        yPos = position of y coordinate to draw the pixel
+        r = r value of rgb to draw the pixel
+        g = g value of rgb to draw the pixel
+        b = b value of rgb to draw the pixel
+        brushType = type of paint brush 
+        brushSize = size of paint brush
+    */
     void draw(int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushType, ubyte brushSize) {
+        // Create a paint brush type based on user's input 
         DrawStrategy paintBrush = createDrawingStrategy(brushType);
+
+        // Draw using the selected paint brush type
         paintBrush.draw(&this.winSurface, xPos, yPos, r, g, b, brushSize);
     }
+
+
 
     void createButtons(){
         // Create the destination rectangles:
@@ -447,6 +503,8 @@ class Client {
             }
         }
     }
+
+
     bool findPoint(int x1, int y1, int x2, int y2, int x, int y)
     {
         if (x > x1 && x < x2 && y > y1 && y < y2){
@@ -456,7 +514,15 @@ class Client {
         return false;
     }
 
-    /// This is a helper function that asks user for Ip address and port
+
+    /**
+    Helper method that asks user for IP address and port number of server they want to connect to.
+    If the user incorrectly inputs for more than 5 times, the application ends.
+    If the server is closed, asks the user if they want to start the application offline.
+    Throws: 
+        SocketOSException e if server is closed or port number is incorrect
+        Exception e if user input is invalid
+    */
     void connectToServer() {
 
         int i = 0;
@@ -472,6 +538,8 @@ class Client {
                 writeln("Enter the port to connect to.");
                 write("> ");
                 string port = readln;
+
+                // Connect to port based on user input
                 mSocket.connect(new InternetAddress(ip, to!ushort(strip(port))));
 
                 // Spwan a thread for receving data from server
@@ -485,9 +553,10 @@ class Client {
 
                 break;
             }
-            catch(SocketOSException e) 
+            catch(SocketOSException e)  /// throw error if server is closed or port number is incorrect
             {
                 string errorMessage = to!string(e.message);
+
                 if (errorMessage.canFind("Connection refused")) 
                 {
                     writeln("Server is closed or the port number is wrong -- ", e.message);
@@ -520,7 +589,10 @@ class Client {
     }
 
 
-    /// This is helper function that asks user if they want to connect online or just execute a offline app
+
+    /**
+    Method that asks if the user wants to start the application online or offline
+    */   
     void setUpServer() {
 
         while (true) {
@@ -550,7 +622,13 @@ class Client {
     }
 
 
-    /// This method runs the application
+    /**
+    Method that runs the application.
+    It runs the application both offline and online.
+    If online, it connects to the server, spawns a thread that listens to the server, and sends packets on a mouse event (draw)
+    If offline, it draws pixels onto the gui.
+    It listens to button click events to manipulate color, brush size, brush types, undo, redo, and erase.
+    */   
     void run(){
         // Flag for determing if we are running the main application loop
         runApplication = true;

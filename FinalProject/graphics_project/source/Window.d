@@ -1,12 +1,18 @@
+/***
+ * Struct that defines window for drawing application (gui)
+ */
 module Window;
 
 import bindbc.sdl;
 import loader = bindbc.loader.sharedlib;
 
+/***
+ * Struct that defines surface for gui
+ */
 struct Window{
-  	SDL_Window* mWindow;
-    int width;
-    int height;
+  	SDL_Window* mWindow; /// window to display the surfaces
+    int width;  /// width of window
+    int height; /// height of window
     
     this(const(char)* name, int _width, int _height,) {
         width = _width;
@@ -23,10 +29,20 @@ struct Window{
         SDL_DestroyWindow(mWindow);
     }
 
+
+	/**
+    Gets window of the struct
+    Returns: window
+    */
     SDL_Surface* getWindowSurface(){
         return SDL_GetWindowSurface(mWindow);
     }
 
+
+	/**
+    Updates window of the struct
+    Returns: window
+    */
     void updateWindowSurface(){
         SDL_UpdateWindowSurface(mWindow);
     }
