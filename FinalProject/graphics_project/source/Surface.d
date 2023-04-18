@@ -80,11 +80,11 @@ struct Surface{
         yPos = position of y coordinate of pixel to check the color 
     Returns: Tuple that contains r, g, b values
     */
-  	Tuple!(int, int, int) getPixel(int xPos, int yPos){
+  	Tuple!(ubyte, ubyte, ubyte) getPixel(int xPos, int yPos){
         ubyte* pixelArray = cast(ubyte*)mSurface.pixels;
-        int b = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+0];
-        int g = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+1];
-        int r = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+2];
+        ubyte b = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+0];
+        ubyte g = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+1];
+        ubyte r = pixelArray[yPos*mSurface.pitch + xPos*mSurface.format.BytesPerPixel+2];
 
         auto t = tuple(r, g, b);
         return t;
