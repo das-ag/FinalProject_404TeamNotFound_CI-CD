@@ -18,8 +18,8 @@
 			"mainSourceFile": "server/server.d",
 			"targetName": "server",
 			"excludedSourceFiles": [
-				"source/app.d",
-				"source/SDLApp.d"
+				"source/SDLApp.d",
+				"source/test/*"
 			],
 			"targetType": "executable"
 		},

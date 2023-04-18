@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module DrawStrategy</title>
+		<link rel="stylesheet" type="text/css" href="./styles/ddox.css"/>
+		<link rel="stylesheet" href="./prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="./scripts/jquery.js">/**/</script><script type="text/javascript" src="./scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="./symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "./";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="./client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="./DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="./Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module DrawStrategy</h1><p>Interface and classes for creating various paint brush styles.
+ It follows factory design pattern.
+</p>
+			<section></section>
+			<section>
+				<h2>Interfaces</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DrawStrategy" class="public" href="./DrawStrategy/DrawStrategy.html">DrawStrategy</a>
+							</code>
+						</td>
+						<td>Interface for classes that implement paint brush types.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Classes</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DrawCircleStrategy" class="public" href="./DrawStrategy/DrawCircleStrategy.html">DrawCircleStrategy</a>
+							</code>
+						</td>
+						<td>Class that draws circle shaped paint brush
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DrawHeartStrategy" class="public" href="./DrawStrategy/DrawHeartStrategy.html">DrawHeartStrategy</a>
+							</code>
+						</td>
+						<td>Class that draws heart shaped paint brush
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DrawSpiralStrategy" class="public" href="./DrawStrategy/DrawSpiralStrategy.html">DrawSpiralStrategy</a>
+							</code>
+						</td>
+						<td>Class that draws spiral shaped paint brush
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DrawSquareStrategy" class="public" href="./DrawStrategy/DrawSquareStrategy.html">DrawSquareStrategy</a>
+							</code>
+						</td>
+						<td>Class that draws square shaped paint brush
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="EraseStrategy" class="public" href="./DrawStrategy/EraseStrategy.html">EraseStrategy</a>
+							</code>
+						</td>
+						<td>Class that erases pixels
+</td>
+					</tr>
+				</table>
+			</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>
