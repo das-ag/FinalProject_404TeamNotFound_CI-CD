@@ -65,8 +65,8 @@ class Client {
     bool runApplication;                /// Flag to check if application is running
 
     // Instantiate the undo and redo command queues
-    SurfaceOperation[] UndoQueue;
-    SurfaceOperation[] RedoQueue;
+    SurfaceOperation[] UndoQueue;       /// Array storing brush mark info of all brush marks, drawn or "redone"
+    SurfaceOperation[] RedoQueue;       /// Array storing brush mark info of "undone" marks
 
 
 
@@ -270,6 +270,169 @@ class Client {
         // Set the paint brush type to eraser
         brushStrokeType = 4;
     }
+
+    /**
+    Method that undoes the most recent command by erasing the most recent brush mark
+    */
+    void undo() {
+        if (UndoQueue.length == 0) {
+            // Let the user know there are no commands left
+            writeln("There is nothing to undo.");
+        }
+        else {
+
+            // Each pixel is considered a command
+            // Undo the last 10 marks made 
+            for(int i=1; i<11; i++) {
+                if (UndoQueue.length != 0) {
+
+                    // Store the current brushStrokeType to return to it after undoing
+                    auto storedBrushStrokeType = this.brushStrokeType;
+
+                    Packet p;
+
+                    // The command being done is the most recent addition to the queue
+                    // This is the previous state of that area of pixels before the last mark was made
+                    SurfaceOperation c = UndoQueue[$-1];
+
+                    // Set the shape of our paintbrush equal to the target mark's brush shape
+                    this.brushStrokeType = c.mBrushType;
+
+                    // Store the state of pixels before undoing is performed
+                    // These colors are stored for the redo command
+                    Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
+                                    
+                    // Online undoing
+                    if (isConnectedToServer) {
+
+                        // Send a packet containing all of the information from the last mark
+                        // The server will draw over the pixels affected by the last mark
+                        with (p) {
+                            x = c.getXPosition(); //xPos + w;
+                            y = c.getYPosition(); //yPos + h;
+                            r = c.mR;
+                            g = c.mG;
+                            b = c.mB;
+                            brushStrokeSize = c.mBrushSize;
+                            brushType = c.mBrushType;  
+                        }
+
+
+                        // writeln("sending packing",p);
+                        mSocket.send(p.GetPacketAsBytes());
+
+                    }
+                    // Offline undoing
+                    else {
+
+                        // Draw over the pixels affected by the last mark
+                        draw(c.getXPosition(), c.getYPosition(), c.mR, c.mG, c.mB, c.mBrushType, c.mBrushSize);
+
+                    }
+
+                    // Create a new command
+                    // The r, g, b values are the color of the pixels before the undo was called
+                    // The brush type and brush size is the same as the initial mark made
+                    auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, prev_pixel[0], prev_pixel[1], prev_pixel[2], 
+                                                            c.mBrushType, c.mBrushSize);
+                    // Append the command onto the redoQueue
+                    RedoQueue ~= prev_state;
+
+
+                                    
+
+                    // Remove the last command from the queue
+                    UndoQueue = UndoQueue[0..$-1];
+
+                    // Then set the brushStrokeType back to what it was before the undo event
+                    this.brushStrokeType = storedBrushStrokeType;
+
+                }
+
+            }
+                                
+        }
+    }
+
+    /**
+    Method that redoes the most recent undone command by repainting the pixels that were erased
+    */
+    void redo() {
+        if (RedoQueue.length == 0) {
+            // Let the user know there are no commands left
+            writeln("There is nothing to redo.");
+        }
+        else {
+            // Treat "Redoing" like drawing pixels, add it to the undo queue
+            // Each mark is considered a command         
+            // 10 marks are redone for each call of redo()
+            for(int i=1; i<11; i++) {
+                if (RedoQueue.length != 0) {
+
+                    // Store the current brushStrokeType to return to it after redoing
+                    auto storedBrushStrokeType = this.brushStrokeType;
+
+                    Packet p;
+
+                    // The command being done is the most recent addition to the queue
+                    // This is the previous state of that area of pixels before the last undo was called
+                    SurfaceOperation c = RedoQueue[$-1];
+
+                    // Set the shape equal to the undone mark's brush shape
+                    this.brushStrokeType = c.mBrushType;
+                                        
+
+                    // Store the state of pixels before redoing is performed
+                    // These colors are stored for the undo command
+                    Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
+
+                    // Online redoing
+                    if (isConnectedToServer) {
+
+                        // Send a packet containing all of the information from the undone mark
+                        // The server will draw over the pixels affected by the last undo
+                        with (p) {
+                            x = c.getXPosition(); //xPos + w;
+                            y = c.getYPosition(); //yPos + h;
+                            r = c.mR;
+                            g = c.mG;
+                            b = c.mB;
+                            brushStrokeSize = c.mBrushSize;
+                            brushType = c.mBrushType;
+                        }
+
+                        //writeln("sending packing",p);
+                        mSocket.send(p.GetPacketAsBytes());
+
+                    }
+                    // Offline redoing
+                    else {
+
+                        // Draw over the pixels affected by the last undo
+                        draw(c.getXPosition(), c.getYPosition(), c.mR, c.mG, c.mB, c.mBrushType, c.mBrushSize);
+
+                    }
+                                    
+                    // Create a new command
+                    // The r, g, b values of commands are the color of the PREVIOUS pixel
+                    auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, 0, 0, 0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
+                                                            this.brushStrokeType, this.brushSize);//brushStrokeType, brushSize);
+                    UndoQueue ~= prev_state;
+
+
+                    // Remove the last command from the queue
+                    RedoQueue = RedoQueue[0..$-1];
+
+                    // Then set the brushStrokeType back to what it was before the redo event
+                    this.brushStrokeType = storedBrushStrokeType;
+            
+                }
+
+            }
+        }
+
+    }
+    
 
 
     /**
@@ -516,228 +679,15 @@ class Client {
                 case 9:
                     writeln("Undo!!!!");
 
-                    writeln("Undo press");
-                        if (UndoQueue.length == 0) {
-                            // Let the user know there are no commands left
-                            writeln("There is nothing to undo.");
-                        }
-                        else {
-
-                            writeln("Undo!!!");
-
-                            // TODO: Design pattern to do this better?
-                            if (isConnectedToServer) 
-                            {
-                                // Each pixel is considered a command
-                                // Undo the last 10 pixels
-                                for(int i=1; i<11; i++) {
-                                    if (UndoQueue.length != 0) {
-
-                                        // Store the current brushStrokeType to return to it after undoing
-                                        auto storedBrushStrokeType = this.brushStrokeType;
-
-                                        Packet p;
-
-                                        // The command being done is the most recent addition to the queue
-                                        SurfaceOperation c = UndoQueue[$-1];
-
-                                        // Set the shape equal to the undone mark's brush shape
-                                        //this.brushStrokeType = c.mStrokeType;
-                                        //setDrawingStrategy(c.mStrokeType);
-                                        this.brushStrokeType = c.mBrushType;
-
-                                        // Store the previous state of pixels
-                                        Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
-                                    
-
-                                        with (p) {
-                                            x = c.getXPosition(); //xPos + w;
-                                            y = c.getYPosition(); //yPos + h;
-                                            r = c.mR;
-                                            g = c.mG;
-                                            b = c.mB;
-                                            brushStrokeSize = c.mBrushSize;
-                                            brushType = c.mBrushType;
-
-                                            // user = clientName;
-                                        }
-
-                                        // Create a new command
-                                        // The r, g, b values of commands are the color of the PREVIOUS pixel
-                                        auto prev_state = new SurfaceOperation(winSurface.mSurface, p.x, p.y, prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                                   brushStrokeType, c.mBrushSize);
-                                        RedoQueue ~= prev_state;
-
-
-                                        // writeln("sending packing",p);
-                                        mSocket.send(p.GetPacketAsBytes());
-
-                                        // Remove the last command from the queue
-                                        UndoQueue = UndoQueue[0..$-1];
-
-                                        // Then set the brushStrokeType back to what it was before the undo event
-                                        //this.brushStrokeType = storedBrushStrokeType;
-                                        //setDrawingStrategy(storedBrushStrokeType);
-                                        this.brushStrokeType = storedBrushStrokeType;
-
-                                    }
-
-                                }
-                                
-                            }
-                            else 
-                            {
-                                // Offline undoing
-                                for(int i=1; i<11; i++) {
-                                    if (UndoQueue.length != 0) {
-
-                                        // Store the current brushStrokeType to return to it after undoing
-                                        auto storedBrushStrokeType = this.brushStrokeType;
-
-
-                                        SurfaceOperation c = UndoQueue[$-1];
-
-                                        // Set the shape equal to the "previous" mark's brush shape
-                                        //this.brushStrokeType = c.mStrokeType;
-                                        //setDrawingStrategy(c.mStrokeType);
-                                        this.brushStrokeType = c.mBrushType;
-
-                                        // Store the previous state of pixels
-                                        Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
-
-                                        // Create a new command
-                                        // The r, g, b values of commands are the color of the PREVIOUS pixel
-                                        auto prev_state = new SurfaceOperation(winSurface.mSurface, c.getXPosition(), c.getYPosition(), prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                                                brushStrokeType, c.mBrushSize);//c.mStrokeType, c.mBrushSize);
-                                        RedoQueue ~= prev_state;
-
-                                        draw(c.getXPosition(), c.getYPosition(), c.mR, c.mG, c.mB, c.mBrushType, c.mBrushSize);
-
-                                        // Remove the last command from the queue
-                                        UndoQueue = UndoQueue[0..$-1];
-
-                                        // Then set the brushStrokeType back to what it was before the undo event
-                                        //this.brushStrokeType = storedBrushStrokeType;
-                                        //setDrawingStrategy(storedBrushStrokeType);
-                                        this.brushStrokeType = storedBrushStrokeType;
-
-
-                                    }
-                                    
-                                 
-                                }
-
-                            }
-                        }
+                    // Call the undo function to remove the last 10 marks
+                    undo();
 
                     break;
                 case 10:
                     writeln("Redo!!!!");
 
-                    if (RedoQueue.length == 0) {
-                            // Let the user know there are no commands left
-                            writeln("There is nothing to redo.");
-                        }
-                        else {
-                            writeln("Redo!!!");
-
-                            if (isConnectedToServer) 
-                            {
-                            // Treat "Redoing" like drawing pixels, add it to the undo queue
-                            // Each pixel is considered a command         
-                                for(int i=1; i<11; i++) {
-                                    if (RedoQueue.length != 0) {
-
-                                        // Store the current brushStrokeType to return to it after redoing
-                                        auto storedBrushStrokeType = this.brushStrokeType;
-
-                                        Packet p;
-
-                                        SurfaceOperation c = RedoQueue[$-1];
-
-                                        // Set the shape equal to the undone mark's brush shape
-                                        this.brushStrokeType = c.mBrushType;
-                                        //setDrawingStrategy(c.mStrokeType);
-
-                                        // Store the previous state of pixels
-                                        Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
-
-
-                                        with (p) {
-                                            x = c.getXPosition(); //xPos + w;
-                                            y = c.getYPosition(); //yPos + h;
-                                            r = c.mR;
-                                            g = c.mG;
-                                            b = c.mB;
-                                            brushStrokeSize = c.mBrushSize;
-                                            brushType = c.mBrushType;
-                                        }
-                                        
-
-                                        // Create a new command
-                                        // The r, g, b values of commands are the color of the PREVIOUS pixel
-                                        auto prev_state = new SurfaceOperation(winSurface.mSurface, p.x, p.y, 0, 0, 0,//prev_pixel[2], prev_pixel[1], prev_pixel[0], 
-                                                                   this.brushStrokeType, brushSize);//brushStrokeType, brushSize);
-                                        UndoQueue ~= prev_state;
-
-                                        //writeln("sending packing",p);
-                                        mSocket.send(p.GetPacketAsBytes());
-
-                                        // Remove the last command from the queue
-                                        RedoQueue = RedoQueue[0..$-1];
-
-                                        // Then set the brushStrokeType back to what it was before the redo event
-                                        this.brushStrokeType = storedBrushStrokeType;
-                                        //setDrawingStrategy(storedBrushStrokeType);
-            
-                                    }
-
-                                }
-                             
-                            } 
-                            // Offline redoing
-                            else {
-                                
-                                for(int i=1; i<11; i++) {
-
-                                    if (RedoQueue.length != 0) {
-
-                                        // Store the current brushStrokeType to return to it after redoing
-                                        auto storedBrushStrokeType = this.brushStrokeType;
-
-                                        SurfaceOperation c = RedoQueue[$-1];
-
-                                        // Set the shape equal to the undone mark's brush shape
-                                        this.brushStrokeType = c.mBrushType;
-                                        //setDrawingStrategy(c.mStrokeType);
-
-                                        // Store the previous state of pixels
-                                        Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
-
-                                        // Create a new command
-                                        // The r, g, b values of commands are the color of the PREVIOUS pixel
-                                        auto prev_state = new SurfaceOperation(winSurface.mSurface, c.getXPosition(), c.getYPosition(), 0, 0, 0, //prev_pixel[2], prev_pixel[1], prev_pixel[0], 
-                                                                               this.brushStrokeType, brushSize);//brushStrokeType, brushSize);
-                                        UndoQueue ~= prev_state;
-
-                                        draw(c.getXPosition(), c.getYPosition(), c.mR, c.mG, c.mB, c.mBrushType, c.mBrushSize);
-
-                                        //writeln("Here is the redoqueue length:");
-                                        //writeln(RedoQueue.length);
-
-                                        RedoQueue = RedoQueue[0..$-1];
-
-                                        // Then set the brushStrokeType back to what it was before the redo event
-                                        this.brushStrokeType = storedBrushStrokeType;
-                                        //setDrawingStrategy(storedBrushStrokeType);
-
-                                    }
-
-                                }
-                             
-                            }     
-                            
-                        }
+                    // Call the redo function to add back the last 10 undone marks
+                    redo();
 
                     break;
                 case 11:
@@ -943,7 +893,7 @@ class Client {
                         // TODO: Design pattern to do this better?
                         if (isConnectedToServer) 
                         {
-                            // Store the previous state of pixels
+                            // Store the state of pixels before painting over them
                             Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(xPos, yPos);
 
                             Packet p;
@@ -960,9 +910,10 @@ class Client {
                             }
 
                             // Create a new command
-                            // The r, g, b values of commands are the color of the PREVIOUS pixel
-                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0, //prev_pixel[2], prev_pixel[1], prev_pixel[0], 
-                                                                   this.brushStrokeType, brushSize);//brushStrokeType, brushSize);
+                            // The r, g, b values of commands are the color of the pixel BEFORE painting is done
+                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0,0,0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
+                                                                   this.brushStrokeType, this.brushSize);//brushStrokeType, brushSize);
+                            // Append the "before" pixel to the undo queue
                             UndoQueue ~= prev_state;
 
                             // TODO: Need to clean this after checking packet size for undo
@@ -974,17 +925,19 @@ class Client {
                         else 
                         {
 
-                            // Store the previous state of pixels
+                            // Store the state of pixels before painting over them
                             Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(xPos, yPos);
                            
                             draw(xPos, yPos, _r, _g, _b, brushStrokeType, brushSize);
 
 
-                            // Create a new command
-                            // The r, g, b values of commands are the color of the PREVIOUS pixel
-                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0, //prev_pixel[2], prev_pixel[1], prev_pixel[0], 
-                                                                   this.brushStrokeType, brushSize);//this.brushStrokeType, this.brushSize);
+                            // Create a new command based on the action just performed
+                            // The r, g, b values of commands are the color of the pixel before being painted over
+                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
+                                                                   this.brushStrokeType, this.brushSize);//this.brushStrokeType, this.brushSize);
                             UndoQueue ~= prev_state;
+                            writeln("Undo length:");
+                            writeln(UndoQueue.length);
                         }
         
                     }

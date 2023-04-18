@@ -28,14 +28,40 @@ var symbols = [
 {name: 'client.Client.prevBrushStroketype', kind: "variabledeclaration", path: './client/Client.prevBrushStroketype.html', attributes: []},
 {name: 'client.Client.receiveDataFromServer', kind: "functiondeclaration", path: './client/Client.receiveDataFromServer.html', attributes: []},
 {name: 'client.Client.receiveThread', kind: "variabledeclaration", path: './client/Client.receiveThread.html', attributes: []},
+<<<<<<< HEAD
+=======
+{name: 'client.Client.redo', kind: "functiondeclaration", path: './client/Client.redo.html', attributes: []},
+{name: 'client.Client.RedoQueue', kind: "variabledeclaration", path: './client/Client.RedoQueue.html', attributes: []},
+>>>>>>> ff3b0d4 (Refactored undo and redo code, added docs)
 {name: 'client.Client.ret', kind: "variabledeclaration", path: './client/Client.ret.html', attributes: []},
 {name: 'client.Client.run', kind: "functiondeclaration", path: './client/Client.run.html', attributes: []},
 {name: 'client.Client.runApplication', kind: "variabledeclaration", path: './client/Client.runApplication.html', attributes: []},
 {name: 'client.Client.setUpServer', kind: "functiondeclaration", path: './client/Client.setUpServer.html', attributes: []},
 {name: 'client.Client.this', kind: "functiondeclaration", path: './client/Client.this.html', attributes: []},
+<<<<<<< HEAD
 {name: 'client.Client.width', kind: "variabledeclaration", path: './client/Client.width.html', attributes: []},
 {name: 'client.Client.window', kind: "variabledeclaration", path: './client/Client.window.html', attributes: []},
 {name: 'client.Client.winSurface', kind: "variabledeclaration", path: './client/Client.winSurface.html', attributes: []},
+=======
+{name: 'client.Client.undo', kind: "functiondeclaration", path: './client/Client.undo.html', attributes: []},
+{name: 'client.Client.UndoQueue', kind: "variabledeclaration", path: './client/Client.UndoQueue.html', attributes: []},
+{name: 'client.Client.width', kind: "variabledeclaration", path: './client/Client.width.html', attributes: []},
+{name: 'client.Client.window', kind: "variabledeclaration", path: './client/Client.window.html', attributes: []},
+{name: 'client.Client.winSurface', kind: "variabledeclaration", path: './client/Client.winSurface.html', attributes: []},
+{name: 'Command', kind: "module", path: './Command.html', attributes: []},
+{name: 'Command.SurfaceOperation', kind: "classdeclaration", path: './Command/SurfaceOperation.html', attributes: []},
+{name: 'Command.SurfaceOperation.getXPosition', kind: "functiondeclaration", path: './Command/SurfaceOperation.getXPosition.html', attributes: []},
+{name: 'Command.SurfaceOperation.getYPosition', kind: "functiondeclaration", path: './Command/SurfaceOperation.getYPosition.html', attributes: []},
+{name: 'Command.SurfaceOperation.mB', kind: "variabledeclaration", path: './Command/SurfaceOperation.mB.html', attributes: []},
+{name: 'Command.SurfaceOperation.mBrushSize', kind: "variabledeclaration", path: './Command/SurfaceOperation.mBrushSize.html', attributes: []},
+{name: 'Command.SurfaceOperation.mBrushType', kind: "variabledeclaration", path: './Command/SurfaceOperation.mBrushType.html', attributes: []},
+{name: 'Command.SurfaceOperation.mG', kind: "variabledeclaration", path: './Command/SurfaceOperation.mG.html', attributes: []},
+{name: 'Command.SurfaceOperation.mR', kind: "variabledeclaration", path: './Command/SurfaceOperation.mR.html', attributes: []},
+{name: 'Command.SurfaceOperation.mSurface', kind: "variabledeclaration", path: './Command/SurfaceOperation.mSurface.html', attributes: []},
+{name: 'Command.SurfaceOperation.mXPosition', kind: "variabledeclaration", path: './Command/SurfaceOperation.mXPosition.html', attributes: []},
+{name: 'Command.SurfaceOperation.mYPosition', kind: "variabledeclaration", path: './Command/SurfaceOperation.mYPosition.html', attributes: []},
+{name: 'Command.SurfaceOperation.this', kind: "functiondeclaration", path: './Command/SurfaceOperation.this.html', attributes: []},
+>>>>>>> ff3b0d4 (Refactored undo and redo code, added docs)
 {name: 'DrawStrategy', kind: "module", path: './DrawStrategy.html', attributes: []},
 {name: 'DrawStrategy.DrawCircleStrategy', kind: "classdeclaration", path: './DrawStrategy/DrawCircleStrategy.html', attributes: []},
 {name: 'DrawStrategy.DrawCircleStrategy.draw', kind: "functiondeclaration", path: './DrawStrategy/DrawCircleStrategy.draw.html', attributes: []},
@@ -64,6 +90,10 @@ var symbols = [
 {name: 'Surface.Surface', kind: "structdeclaration", path: './Surface/Surface.html', attributes: []},
 {name: 'Surface.Surface.btn_height', kind: "variabledeclaration", path: './Surface/Surface.btn_height.html', attributes: []},
 {name: 'Surface.Surface.btnSurface', kind: "variabledeclaration", path: './Surface/Surface.btnSurface.html', attributes: []},
+<<<<<<< HEAD
+=======
+{name: 'Surface.Surface.getbtnPixel', kind: "functiondeclaration", path: './Surface/Surface.getbtnPixel.html', attributes: []},
+>>>>>>> ff3b0d4 (Refactored undo and redo code, added docs)
 {name: 'Surface.Surface.getPixel', kind: "functiondeclaration", path: './Surface/Surface.getPixel.html', attributes: []},
 {name: 'Surface.Surface.height', kind: "variabledeclaration", path: './Surface/Surface.height.html', attributes: []},
 {name: 'Surface.Surface.mSurface', kind: "variabledeclaration", path: './Surface/Surface.mSurface.html', attributes: []},
