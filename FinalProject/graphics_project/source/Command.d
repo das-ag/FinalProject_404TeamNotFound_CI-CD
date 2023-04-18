@@ -8,7 +8,9 @@ import std.stdio;
 // Command interface implemented by surface operations
 interface Command {
     //int Execute();
-    int Undo();
+    //int Undo();
+    int getXPosition();
+    int getYPosition();
 }
 
 // Surface operations implement command interface
