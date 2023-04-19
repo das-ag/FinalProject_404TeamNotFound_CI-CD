@@ -70,6 +70,7 @@ dub run --build=release -c=Server
 ```bash
 dub run --build=release -c=Client
 ```
+The executable files can be found under the `FinalProject/graphics_project/.dub/build/`<Client/Server>`-release` path.
 
 # Design Pattern
 
