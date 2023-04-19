@@ -14,14 +14,14 @@ unittest{
     destroy(c);
 }
 
-@("Test SDL check variable")
+@("Test SDL init - check variables")
 unittest{
     Client c = new Client;
     assert(c.isConnectedToServer == false);
     destroy(c);
 }
 
-@("Test SDL check dimension")
+@("Test SDL init - check variables")
 unittest{
     Client c = new Client;
     assert(c.width != 600);
@@ -57,7 +57,7 @@ unittest {
     assert(!c.findPoint(x1, y1, x2, y2, x, y));
 }
 
-@("test draw button")
+@("Test draw button")
 unittest {
     loadSDL();
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -86,3 +86,78 @@ unittest {
     assert(p[0]==0);
 }
 
+@("Test erase - extra feature")
+unittest{
+    Client c = new Client;
+    c.erase();
+    assert((c.brushType == 4));
+}
+
+
+@("Test increase brush size - extra feature")
+unittest{
+    Client c = new Client;
+    c.changeBrushSize(2);
+    assert(c.brushSize == 6);
+    destroy(c);
+}
+
+@("Test decrease brush size - extra feature")
+unittest{
+    Client c = new Client;
+    c.changeBrushSize(-1);
+    assert(c.brushSize == 3);
+    destroy(c);
+}
+
+@("Test max brush size - extra feature")
+unittest{
+    Client c = new Client;
+    c.changeBrushSize(7);
+    assert(c.brushSize == 10);
+}
+
+@("Test min bursh size - extra feature")
+unittest{
+    Client c = new Client;
+    c.changeBrushSize(-4);
+    assert(c.brushSize == 2);
+}
+
+
+@("Test color change - extra feature")
+unittest{
+    Client c = new Client;
+    c.changeBrushColor(3);
+    assert(c._r == 0);
+    assert(c._g == 0);
+    assert(c._b == 255);
+
+}
+
+
+@("Test receivedDataFromServer() function - network")
+unittest{
+    import std.socket;
+    import unit_threaded.mock;
+
+    // Mock Socket and make receive() function to return nothing
+    auto socketMock = mock!Socket;
+    socketMock.mockReturn!"receive"();
+
+    // Instantiate client class
+    Client test = new Client;
+    test.mSocket = socketMock;
+
+    // Set isConnectToServer to true to mimic socket connection
+    test.isConnectedToServer = true;
+    test.receiveDataFromServer();
+
+    // When the server sends 0 bytes, it means the server is closed.
+    // In our code, we check if the server is closed as we lisiten for packets.
+    // NOTE: Invalid memory operation Exception will be raised while running this unittest
+    // This is due to our logic where we close the socket when the server is down. (Refer to line 159 in cliend.d)
+    // However, since we are mocking the socket, it raises an exception as the mock socket cannot close.
+    assert(test.isConnectedToServer == false);
+    
+}

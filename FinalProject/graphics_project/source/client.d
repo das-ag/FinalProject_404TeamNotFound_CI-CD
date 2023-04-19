@@ -53,7 +53,7 @@ class Client {
     int btn_count = 12;                 /// Number of buttons on the toolbar
 
     const ubyte MAX_BRUSH_SIZE = 10;    /// Maximum size of brush that users can increase
-    const ubyte MIN_BRUSH_SIZE = 4;     /// Minimum size of brush that users can decrease
+    const ubyte MIN_BRUSH_SIZE = 2;     /// Minimum size of brush that users can decrease
     ubyte brushSize = 4;                /// size of brush (default is 4) 
     ubyte brushType = 0;                /// Type of paint brush (e.g. circle, heart) - default is square
     ubyte prevBrushType = 0;            /// Variable to save previous paint brush type
@@ -66,8 +66,8 @@ class Client {
     bool runApplication;                /// Flag to check if application is running
 
     // Instantiate the undo and redo command queues
-    SurfaceOperation[] UndoQueue;       /// Array storing brush mark info of all brush marks, drawn or "redone"
-    SurfaceOperation[] RedoQueue;       /// Array storing brush mark info of "undone" marks
+    SurfaceOperation[] undoQueue;       /// Array storing brush mark info of all brush marks, drawn or "redone"
+    SurfaceOperation[] redoQueue;       /// Array storing brush mark info of "undone" marks
 
 
     /** 
@@ -136,18 +136,12 @@ class Client {
     Params:
         socket = Socket to listen from server
     */
-    void receiveDataFromServer(shared Socket socket) {
+    void receiveDataFromServer() {
 
         byte[] dummyBuffer = [];
         int missingBytes = 0;
 
         while(true) {
-
-            if (!mSocket.isAlive()) { 
-                // isConnectedToServer = false;
-                writeln("break thread!");
-                break;
-            }
 
             byte[Packet.sizeof] finalBuffer;
             byte[Packet.sizeof] receivedBuffer;
@@ -204,6 +198,11 @@ class Client {
 
             }
 
+            if (!mSocket.isAlive()) { 
+                isConnectedToServer = false;
+                writeln("break thread!");
+                break;
+            }
             // If all the packets are received, draw on surface
             if (actualReceivedBytes > 0 && dummyBuffer.length == 0) {
 
@@ -277,7 +276,7 @@ class Client {
     Method that undoes the most recent command by erasing the most recent brush mark
     */
     void undo() {
-        if (UndoQueue.length == 0) {
+        if (undoQueue.length == 0) {
             // Let the user know there are no commands left
             writeln("There is nothing to undo.");
         }
@@ -286,7 +285,7 @@ class Client {
             // Each pixel is considered a command
             // Undo the last 10 marks made 
             for(int i = 1; i < 11; i++) {
-                if (UndoQueue.length != 0) {
+                if (undoQueue.length != 0) {
 
                     // Store the current brushStrokeType to return to it after undoing
                     auto storedBrushStrokeType = this.brushType;
@@ -295,7 +294,7 @@ class Client {
 
                     // The command being done is the most recent addition to the queue
                     // This is the previous state of that area of pixels before the last mark was made
-                    SurfaceOperation c = UndoQueue[$ - 1];
+                    SurfaceOperation c = undoQueue[$ - 1];
 
                     // Set the shape of our paintbrush equal to the target mark's brush shape
                     this.brushType = c.mBrushType;
@@ -316,7 +315,7 @@ class Client {
                             g = c.mG;
                             b = c.mB;
                             brushStrokeSize = c.mBrushSize;
-                            brushType = c.mBrushType;  
+                            brushStrokeType = c.mBrushType;  
                         }
 
                         // writeln("sending packing",p);
@@ -337,10 +336,10 @@ class Client {
                     auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, prev_pixel[0],      
                                                             prev_pixel[1], prev_pixel[2],c.mBrushType, c.mBrushSize);
                     // Append the command onto the redoQueue
-                    RedoQueue ~= prev_state;
+                    redoQueue ~= prev_state;
 
                     // Remove the last command from the queue
-                    UndoQueue = UndoQueue[0 .. $ - 1];
+                    undoQueue = undoQueue[0 .. $ - 1];
 
                     // Then set the brushStrokeType back to what it was before the undo event
                     this.brushType = storedBrushStrokeType;
@@ -356,7 +355,7 @@ class Client {
     Method that redoes the most recent undone command by repainting the pixels that were erased
     */
     void redo() {
-        if (RedoQueue.length == 0) {
+        if (redoQueue.length == 0) {
             // Let the user know there are no commands left
             writeln("There is nothing to redo.");
         }
@@ -365,7 +364,7 @@ class Client {
             // Each mark is considered a command         
             // 10 marks are redone for each call of redo()
             for(int i = 1; i < 11; i++) {
-                if (RedoQueue.length != 0) {
+                if (redoQueue.length != 0) {
 
                     // Store the current brushStrokeType to return to it after redoing
                     auto storedBrushStrokeType = this.brushType;
@@ -374,7 +373,7 @@ class Client {
 
                     // The command being done is the most recent addition to the queue
                     // This is the previous state of that area of pixels before the last undo was called
-                    SurfaceOperation c = RedoQueue[$ - 1];
+                    SurfaceOperation c = redoQueue[$ - 1];
 
                     // Set the shape equal to the undone mark's brush shape
                     this.brushType = c.mBrushType;
@@ -414,11 +413,11 @@ class Client {
                     // The r, g, b values of commands are the color of the PREVIOUS pixel
                     auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, 0, 0, 0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
                                                             this.brushType, this.brushSize);//brushStrokeType, brushSize);
-                    UndoQueue ~= prev_state;
+                    undoQueue ~= prev_state;
 
 
                     // Remove the last command from the queue
-                    RedoQueue = RedoQueue[0 .. $ - 1];
+                    redoQueue = redoQueue[0 .. $ - 1];
 
                     // Then set the brushStrokeType back to what it was before the redo event
                     this.brushType = storedBrushStrokeType;
@@ -762,7 +761,7 @@ class Client {
                 mSocket.connect(new InternetAddress(ip, to!ushort(strip(port))));
 
                 // Spwan a thread for receving data from server
-                receiveThread = new Thread({receiveDataFromServer(cast(shared)mSocket);}).start();
+                receiveThread = new Thread({receiveDataFromServer();}).start();
                 isConnectedToServer = true;
                 writeln("Connected!");
 
@@ -919,8 +918,8 @@ class Client {
 
                             // Debuging purpose: Need to clean this after checking packet size for undo
                             // writeln(p.sizeof);
-                            
-                            UndoQueue ~= prev_state;
+                           
+                            undoQueue ~= prev_state;
 
                             // Send pixel to server
                             mSocket.send(p.GetPacketAsBytes());
@@ -938,7 +937,7 @@ class Client {
                             // The r, g, b values of commands are the color of the pixel before being painted over
                             auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0, 
                                                                     this.brushType, this.brushSize);
-                            UndoQueue ~= prev_state;
+                            undoQueue ~= prev_state;
                             // writeln("Undo length:");
                             // writeln(UndoQueue.length);
                         }
