@@ -31,14 +31,14 @@
 <url><loc>http://127.0.0.1/client/Client.receiveDataFromServer.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.receiveThread.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.redo.html</loc></url>
-<url><loc>http://127.0.0.1/client/Client.RedoQueue.html</loc></url>
+<url><loc>http://127.0.0.1/client/Client.redoQueue.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.ret.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.run.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.runApplication.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.setUpServer.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.this.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.undo.html</loc></url>
-<url><loc>http://127.0.0.1/client/Client.UndoQueue.html</loc></url>
+<url><loc>http://127.0.0.1/client/Client.undoQueue.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.width.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.window.html</loc></url>
 <url><loc>http://127.0.0.1/client/Client.winSurface.html</loc></url>

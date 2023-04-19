@@ -539,7 +539,7 @@
 				"comment": "Class that erases pixels\n"
 			}
 		],
-		"comment": " Interface and classes for creating various paint brush styles.\n It follows factory design pattern.\n",
+		"comment": " Interface and classes for creating various paint brush styles.\n It implements factory design pattern.\n",
 		"name": "DrawStrategy"
 	},
 	{
@@ -1078,7 +1078,7 @@
 						"char": 17,
 						"name": "MIN_BRUSH_SIZE",
 						"deco": "xh",
-						"init": "cast(ubyte)4u",
+						"init": "cast(ubyte)2u",
 						"protection": "public",
 						"offset": 129,
 						"comment": "Minimum size of brush that users can decrease\n"
@@ -1185,7 +1185,7 @@
 						"line": 69,
 						"kind": "variable",
 						"char": 24,
-						"name": "UndoQueue",
+						"name": "undoQueue",
 						"deco": "AC7Command16SurfaceOperation",
 						"protection": "public",
 						"offset": 152,
@@ -1195,7 +1195,7 @@
 						"line": 70,
 						"kind": "variable",
 						"char": 24,
-						"name": "RedoQueue",
+						"name": "redoQueue",
 						"deco": "AC7Command16SurfaceOperation",
 						"protection": "public",
 						"offset": 168,
@@ -1228,22 +1228,15 @@
 						"comment": "\n     Destructs Client class\n"
 					},
 					{
-						"parameters": [
-							{
-								"deco": "OC3std6socket6Socket",
-								"name": "socket"
-							}
-						],
-						"line": 139,
+						"line": 137,
 						"kind": "function",
-						"originalType": "void(shared Socket socket)",
 						"char": 10,
 						"name": "receiveDataFromServer",
-						"deco": "FOC3std6socket6SocketZv",
+						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 238,
-						"comment": "    Method that is spawned to receive packets from server\n    Params:\n        socket = Socket to listen from server\n"
+						"endline": 235,
+						"comment": "    Method that is spawned to receive packets from server\n"
 					},
 					{
 						"parameters": [
@@ -1252,47 +1245,47 @@
 								"name": "amount"
 							}
 						],
-						"line": 245,
+						"line": 242,
 						"kind": "function",
 						"char": 10,
 						"name": "changeBrushSize",
 						"deco": "FiZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 259,
+						"endline": 256,
 						"comment": "    Helper function that changes the size of the brush\n    Params:\n        amount = amount to change the brush size\n"
 					},
 					{
-						"line": 265,
+						"line": 262,
 						"kind": "function",
 						"char": 10,
 						"name": "erase",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 274,
+						"endline": 271,
 						"comment": "    Method that erases pixels on the gui.\n"
 					},
 					{
-						"line": 279,
+						"line": 276,
 						"kind": "function",
 						"char": 10,
 						"name": "undo",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 353,
+						"endline": 350,
 						"comment": "    Method that undoes the most recent command by erasing the most recent brush mark\n"
 					},
 					{
-						"line": 358,
+						"line": 355,
 						"kind": "function",
 						"char": 10,
 						"name": "redo",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 431,
+						"endline": 428,
 						"comment": "    Method that redoes the most recent undone command by repainting the pixels that were erased\n"
 					},
 					{
@@ -1302,14 +1295,14 @@
 								"name": "color"
 							}
 						],
-						"line": 440,
+						"line": 437,
 						"kind": "function",
 						"char": 10,
 						"name": "changeBrushColor",
 						"deco": "FiZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 460,
+						"endline": 457,
 						"comment": "    Helper method that changes color of paint brush\n    Params:\n        color = identifier for color (red = 1, green = 2, blue = 3)\n"
 					},
 					{
@@ -1319,14 +1312,14 @@
 								"name": "strokeType"
 							}
 						],
-						"line": 470,
+						"line": 467,
 						"kind": "function",
 						"char": 18,
 						"name": "createDrawingStrategy",
 						"deco": "FhZC12DrawStrategyQo",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 483,
+						"endline": 480,
 						"comment": "    Method that creates instances of paint brush classes.\n    Based on factory design pattern.\n    Params:\n        strokeType = identifier for paint brush (square = 0, 1 = circle, 2 = heart, 3 = spiral, 4 = eraser)\n    Returns: DrawStrategy class based on parameter\n"
 					},
 					{
@@ -1360,25 +1353,25 @@
 								"name": "brushSize"
 							}
 						],
-						"line": 498,
+						"line": 495,
 						"kind": "function",
 						"char": 10,
 						"name": "draw",
 						"deco": "FiihhhhhZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 504,
+						"endline": 501,
 						"comment": "    Method that draws pixel on x, y coordinate based on given color, paint brush type, and brush size\n    This method uses factory design pattern.\n    Params:\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushType = type of paint brush\n        brushSize = size of paint brush\n"
 					},
 					{
-						"line": 510,
+						"line": 507,
 						"kind": "function",
 						"char": 10,
 						"name": "createButtons",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 607,
+						"endline": 604,
 						"comment": "    Method that creates the buttons on the upper margin of the window surface.\n"
 					},
 					{
@@ -1392,14 +1385,14 @@
 								"name": "yPos"
 							}
 						],
-						"line": 615,
+						"line": 612,
 						"kind": "function",
 						"char": 10,
 						"name": "ifButtonsClicked",
 						"deco": "FiiZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 711,
+						"endline": 708,
 						"comment": "    Method that selects an operation to be performed based on the button that is clicked.\n    Params:\n        xPos = position of x coordinate of the mouse click\n        yPos = position of y coordinate of the mouse click\n"
 					},
 					{
@@ -1429,47 +1422,47 @@
 								"name": "y"
 							}
 						],
-						"line": 725,
+						"line": 722,
 						"kind": "function",
 						"char": 10,
 						"name": "findPoint",
 						"deco": "FiiiiiiZb",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 734,
+						"endline": 731,
 						"comment": "    Helper method that checks if the mouse click is within the boundaries of the button surface\n    Params:\n        x1 = position of the starting x coordinate of button surface\n        y1 = position of the starting y coordinate of button surface\n        x2 = position of the ending x coordinate of button surface\n        y2 = position of the ending y coordinate of button surface\n        x = position of x coordinate of the mouse click\n        y = position of y coordinate of the mouse click\n    Returns: True if mouse click is on button surface, else false.\n"
 					},
 					{
-						"line": 745,
+						"line": 742,
 						"kind": "function",
 						"char": 10,
 						"name": "connectToServer",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 808,
+						"endline": 805,
 						"comment": "    Helper method that asks user for IP address and port number of server they want to connect.\n    If the user incorrectly inputs for more than 5 times, the application ends.\n    If the server is closed, it asks the user if they want to start the application offline.\n    Throws:\n        SocketOSException e if server is closed or port number is incorrect\n        Exception e if user input is invalid\n"
 					},
 					{
-						"line": 814,
+						"line": 811,
 						"kind": "function",
 						"char": 10,
 						"name": "setUpServer",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 834,
+						"endline": 831,
 						"comment": "    Method that asks if the user wants to start the application online or offline\n"
 					},
 					{
-						"line": 844,
+						"line": 841,
 						"kind": "function",
 						"char": 10,
 						"name": "run",
 						"deco": "FZv",
 						"protection": "public",
 						"endchar": 5,
-						"endline": 969,
+						"endline": 966,
 						"comment": "    Method that runs the application.\n    It runs the application both offline and online.\n    If online, it connects to the server, spawns a thread that listens to the server, and sends packets on a mouse event (draw)\n    If offline, it draws pixels onto the gui.\n    It listens to button click events to manipulate color, brush size, brush types, undo, redo, and erase.\n"
 					}
 				],

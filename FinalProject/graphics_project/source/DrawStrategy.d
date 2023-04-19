@@ -1,6 +1,6 @@
 /***
  * Interface and classes for creating various paint brush styles. 
- * It follows factory design pattern.
+ * It implements factory design pattern.
  */
 
 module DrawStrategy;

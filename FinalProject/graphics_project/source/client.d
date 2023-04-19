@@ -133,8 +133,6 @@ class Client {
 
     /**
     Method that is spawned to receive packets from server
-    Params:
-        socket = Socket to listen from server
     */
     void receiveDataFromServer() {
 
