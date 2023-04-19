@@ -40,7 +40,7 @@ To generate ddox
 ```> dub build -c=ddox --build=ddox```
 
 ## Features
-- Real time drawing collaboration with your friends via connection to a server 
+- Real time multi-user drawing collaboration via connection to a server 
 - Undo/Redo
 - Three paint brush types (square, circle, heart, spiral)
 - Three paint brush colors
