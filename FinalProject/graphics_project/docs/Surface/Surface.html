@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Surface</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">vibe
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../vibe/appmain.html">appmain</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Command.html">Command</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../server.html">server</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Surface</h1><p>Struct that defines surfaces for gui
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">struct</span> <span class="typ">Surface</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.this.html" class="public">
+								<code>this</code>
+							</a>
+							<span class="tableEntryAnnotation">(_width, _height, _btn_height)</span>
+						</td>
+						<td>Constructs Surface Class
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.btn_height.html" class="public"><code>btn_height</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>height of buttons
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.btnSurface.html" class="public"><code>btnSurface</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindbc<wbr/></span><span class="pun">.</span><span class="pln">sdl<wbr/></span><span class="pun">.</span><span class="pln">bind<wbr/></span><span class="pun">.</span><span class="pln">sdlsurface<wbr/></span><span class="pun">.</span><span class="typ">SDL_Surface</span><span class="pun">*</span></code></td><td>surface for buttons
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.height.html" class="public"><code>height</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>height of drawing surface
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.mSurface.html" class="public"><code>mSurface</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindbc<wbr/></span><span class="pun">.</span><span class="pln">sdl<wbr/></span><span class="pun">.</span><span class="pln">bind<wbr/></span><span class="pun">.</span><span class="pln">sdlsurface<wbr/></span><span class="pun">.</span><span class="typ">SDL_Surface</span><span class="pun">*</span></code></td><td>surface for drawing
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.width.html" class="public"><code>width</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>width of drawing surface
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.getbtnPixel.html" class="public">
+								<code>getbtnPixel</code>
+							</a>
+							<span class="tableEntryAnnotation">(xPos, yPos)</span>
+						</td>
+						<td>Method that checks rgb value of a pixel at a given x,y coordinate for the btn surface
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.getPixel.html" class="public">
+								<code>getPixel</code>
+							</a>
+							<span class="tableEntryAnnotation">(xPos, yPos)</span>
+						</td>
+						<td>Method that checks rgb value of a pixel at a given x,y coordinate
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Surface/Surface.UpdateSurfacePixel.html" class="public">
+								<code>UpdateSurfacePixel</code>
+							</a>
+							<span class="tableEntryAnnotation">(xPos, yPos, r, g, b)</span>
+						</td>
+						<td>Method that updates color of pixel at a given x, y coordinate on the drawing surface.
+</td>
+					</tr>
+				</table>
+			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

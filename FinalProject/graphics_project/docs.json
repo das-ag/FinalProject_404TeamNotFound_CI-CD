@@ -1,0 +1,1643 @@
+[
+	{
+		"kind": "module",
+		"file": "source/Command.d",
+		"members": [
+			{
+				"line": 14,
+				"kind": "interface",
+				"char": 1,
+				"members": [],
+				"name": "Command",
+				"protection": "public",
+				"comment": "Command Interface\n"
+			},
+			{
+				"line": 22,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"line": 23,
+						"kind": "variable",
+						"char": 18,
+						"name": "mSurface",
+						"deco": "PS6bindbc3sdl4bind10sdlsurface11SDL_Surface",
+						"protection": "public",
+						"offset": 24,
+						"comment": "Pointer to the surface being operated on\n"
+					},
+					{
+						"line": 24,
+						"kind": "variable",
+						"char": 9,
+						"name": "mXPosition",
+						"deco": "i",
+						"protection": "public",
+						"offset": 32,
+						"comment": "Position on the x-axis for target pixel\n"
+					},
+					{
+						"line": 25,
+						"kind": "variable",
+						"char": 9,
+						"name": "mYPosition",
+						"deco": "i",
+						"protection": "public",
+						"offset": 36,
+						"comment": "Position on the y-axis for target pixel\n"
+					},
+					{
+						"line": 26,
+						"kind": "variable",
+						"char": 11,
+						"name": "mR",
+						"deco": "h",
+						"protection": "public",
+						"offset": 40,
+						"comment": "R value of the stored brushmark\n"
+					},
+					{
+						"line": 27,
+						"kind": "variable",
+						"char": 11,
+						"name": "mG",
+						"deco": "h",
+						"protection": "public",
+						"offset": 41,
+						"comment": "G value of the stored brushmark\n"
+					},
+					{
+						"line": 28,
+						"kind": "variable",
+						"char": 11,
+						"name": "mB",
+						"deco": "h",
+						"protection": "public",
+						"offset": 42,
+						"comment": "B value of the stored brushmark\n"
+					},
+					{
+						"line": 29,
+						"kind": "variable",
+						"char": 11,
+						"name": "mBrushType",
+						"deco": "h",
+						"protection": "public",
+						"offset": 43,
+						"comment": "Type of paint brush the brushmark was made with (Square, circle, etc.)\n"
+					},
+					{
+						"line": 30,
+						"kind": "variable",
+						"char": 11,
+						"name": "mBrushSize",
+						"deco": "h",
+						"protection": "public",
+						"offset": 44,
+						"comment": "Size of paint brush the brushmark was made with\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "PS6bindbc3sdl4bind10sdlsurface11SDL_Surface",
+								"name": "surface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushType"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"line": 44,
+						"kind": "constructor",
+						"originalType": "(SDL_Surface* surface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushType, ubyte brushSize)",
+						"char": 5,
+						"name": "this",
+						"deco": "FPS6bindbc3sdl4bind10sdlsurface11SDL_SurfaceiihhhhhZC7Command16SurfaceOperation",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 55,
+						"comment": "\n    Constructs SurfaceOperations\n    Params:\n        surface = pointer to SDL surface\n        xPos = position on the x-axis of surface\n        yPos = position on the y-axis of surface\n        r = R value of brushmark\n        g = G value of brushmark\n        b = B value of brushmark\n        brushType = Type of paint brush the brushmark was made with (Square, circle, etc.)\n        brushSize = Size of paint brush the brushmark was made with\n"
+					},
+					{
+						"storageClass": [
+							"scope"
+						],
+						"line": 60,
+						"kind": "destructor",
+						"char": 5,
+						"name": "~this",
+						"deco": "FNlZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 62,
+						"comment": "    SurfaceOperation destructor\n"
+					},
+					{
+						"overrides": [
+							"Command.Command.getXPosition"
+						],
+						"line": 67,
+						"kind": "function",
+						"char": 9,
+						"name": "getXPosition",
+						"deco": "FZi",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 69,
+						"comment": "    Getter function for returning x-position of the command\n"
+					},
+					{
+						"overrides": [
+							"Command.Command.getYPosition"
+						],
+						"line": 74,
+						"kind": "function",
+						"char": 9,
+						"name": "getYPosition",
+						"deco": "FZi",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 76,
+						"comment": "    Getter function for returning y-position of the command\n"
+					}
+				],
+				"name": "SurfaceOperation",
+				"interfaces": [
+					"Command.Command"
+				],
+				"protection": "public",
+				"comment": "Surface operations implement command interface.\n"
+			}
+		],
+		"comment": "Command interface implemented by surface operations\n",
+		"name": "Command"
+	},
+	{
+		"kind": "module",
+		"file": "source/DrawStrategy.d",
+		"members": [
+			{
+				"line": 14,
+				"kind": "interface",
+				"char": 1,
+				"members": [
+					{
+						"storageClass": [
+							"abstract"
+						],
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"line": 28,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"comment": "    Draws pixels based on paint brush type\n\n    Params:\n        winSurface = pointer to the SDL app surface to draw the pixels\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushSize = size of brush to draw the pixel\n"
+					}
+				],
+				"name": "DrawStrategy",
+				"protection": "public",
+				"comment": "Interface for classes that implement paint brush types.\n"
+			},
+			{
+				"line": 35,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"overrides": [
+							"DrawStrategy.DrawStrategy.draw"
+						],
+						"line": 49,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 58,
+						"comment": "    Draws square around a given x, y coordinate.\n\n    Params:\n        winSurface = pointer to the SDL app surface to draw the pixels\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushSize = size of square to draw around the given pixel\n"
+					}
+				],
+				"name": "DrawSquareStrategy",
+				"interfaces": [
+					"DrawStrategy.DrawStrategy"
+				],
+				"protection": "public",
+				"comment": "Class that draws square shaped paint brush\n"
+			},
+			{
+				"line": 65,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"overrides": [
+							"DrawStrategy.DrawStrategy.draw"
+						],
+						"line": 79,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 91,
+						"comment": "    Draws circle around a given x, y coordinate.\n\n    Params:\n        winSurface = pointer to the SDL app surface to draw the pixels\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushSize = size of circle to draw around the given pixel\n"
+					}
+				],
+				"name": "DrawCircleStrategy",
+				"interfaces": [
+					"DrawStrategy.DrawStrategy"
+				],
+				"protection": "public",
+				"comment": "Class that draws circle shaped paint brush\n"
+			},
+			{
+				"line": 98,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"overrides": [
+							"DrawStrategy.DrawStrategy.draw"
+						],
+						"line": 111,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 125,
+						"comment": "    Draws heart around a given x, y coordinate.\n\n    Params:\n        winSurface = pointer to the SDL app surface to draw the pixels\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushSize = size of heart to draw around the given pixel\n"
+					}
+				],
+				"name": "DrawHeartStrategy",
+				"interfaces": [
+					"DrawStrategy.DrawStrategy"
+				],
+				"protection": "public",
+				"comment": "Class that draws heart shaped paint brush\n"
+			},
+			{
+				"line": 132,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"overrides": [
+							"DrawStrategy.DrawStrategy.draw"
+						],
+						"line": 146,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 174,
+						"comment": "    Draws spiral pattern around a given x, y coordinate.\n\n    Params:\n        winSurface = pointer to the SDL app surface to draw the pixels\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushSize = size of spiral to draw around the given pixel\n"
+					}
+				],
+				"name": "DrawSpiralStrategy",
+				"interfaces": [
+					"DrawStrategy.DrawStrategy"
+				],
+				"protection": "public",
+				"comment": "Class that draws spiral shaped paint brush\n"
+			},
+			{
+				"line": 181,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "PS7SurfaceQi",
+								"name": "winSurface"
+							},
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"overrides": [
+							"DrawStrategy.DrawStrategy.draw"
+						],
+						"line": 196,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FPS7SurfaceQiiihhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 211,
+						"comment": "    Erases pixels around a given x, y coordinate.\n    Eraser is in the shape of a square.\n\n    Params:\n        winSurface = pointer to the SDL app surface to erase the pixels\n        xPos = position of x coordinate to erase the pixel\n        yPos = position of y coordinate to erase the pixel\n        r = r value of rgb to erase the pixel - fixed to 0\n        g = g value of rgb to erase the pixel - fixed to 0\n        b = b value of rgb to erase the pixel - fixed to 0\n        brushSize = size of square to erase around the given pixel\n"
+					}
+				],
+				"name": "EraseStrategy",
+				"interfaces": [
+					"DrawStrategy.DrawStrategy"
+				],
+				"protection": "public",
+				"comment": "Class that erases pixels\n"
+			}
+		],
+		"comment": " Interface and classes for creating various paint brush styles.\n It follows factory design pattern.\n",
+		"name": "DrawStrategy"
+	},
+	{
+		"kind": "module",
+		"file": "source/Packet.d",
+		"members": [
+			{
+				"line": 12,
+				"kind": "struct",
+				"char": 1,
+				"members": [
+					{
+						"line": 14,
+						"kind": "variable",
+						"char": 11,
+						"name": "user",
+						"deco": "G16a",
+						"protection": "public",
+						"offset": 0,
+						"comment": "name of client\n"
+					},
+					{
+						"line": 15,
+						"kind": "variable",
+						"char": 9,
+						"name": "x",
+						"deco": "i",
+						"protection": "public",
+						"offset": 16,
+						"comment": "x coordinate of the pixel\n"
+					},
+					{
+						"line": 16,
+						"kind": "variable",
+						"char": 9,
+						"name": "y",
+						"deco": "i",
+						"protection": "public",
+						"offset": 20,
+						"comment": "y coordinate of the pixel\n"
+					},
+					{
+						"line": 17,
+						"kind": "variable",
+						"char": 11,
+						"name": "r",
+						"deco": "h",
+						"protection": "public",
+						"offset": 24,
+						"comment": "r value of the pixel\n"
+					},
+					{
+						"line": 18,
+						"kind": "variable",
+						"char": 11,
+						"name": "g",
+						"deco": "h",
+						"protection": "public",
+						"offset": 25,
+						"comment": "g value of the pixel\n"
+					},
+					{
+						"line": 19,
+						"kind": "variable",
+						"char": 11,
+						"name": "b",
+						"deco": "h",
+						"protection": "public",
+						"offset": 26,
+						"comment": "b value of the pixel\n"
+					},
+					{
+						"line": 20,
+						"kind": "variable",
+						"char": 8,
+						"name": "brushStrokeType",
+						"deco": "h",
+						"protection": "public",
+						"offset": 27,
+						"comment": "type of paint brush (e.g square, circle, heart)\n"
+					},
+					{
+						"line": 21,
+						"kind": "variable",
+						"char": 8,
+						"name": "brushStrokeSize",
+						"deco": "h",
+						"protection": "public",
+						"offset": 28,
+						"comment": "size of brush\n"
+					},
+					{
+						"line": 28,
+						"kind": "function",
+						"originalType": "byte[Packet.sizeof]()",
+						"char": 25,
+						"name": "GetPacketAsBytes",
+						"deco": "FZG32g",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 47,
+						"comment": "    Method that converts Packet into an array of bytes for serialization\n    Returns: an array of bytes that are serialized\n"
+					}
+				],
+				"name": "Packet",
+				"protection": "public",
+				"comment": "Struct that defines Packet for network\n"
+			}
+		],
+		"comment": " Struct that defines packet for network\n",
+		"name": "Packet"
+	},
+	{
+		"kind": "module",
+		"file": "source/Surface.d",
+		"members": [
+			{
+				"line": 16,
+				"kind": "struct",
+				"char": 1,
+				"members": [
+					{
+						"line": 17,
+						"kind": "variable",
+						"char": 17,
+						"name": "mSurface",
+						"deco": "PS6bindbc3sdl4bind10sdlsurface11SDL_Surface",
+						"protection": "public",
+						"offset": 0,
+						"comment": "surface for drawing\n"
+					},
+					{
+						"line": 18,
+						"kind": "variable",
+						"char": 18,
+						"name": "btnSurface",
+						"deco": "PS6bindbc3sdl4bind10sdlsurface11SDL_Surface",
+						"protection": "public",
+						"offset": 8,
+						"comment": "surface for buttons\n"
+					},
+					{
+						"line": 20,
+						"kind": "variable",
+						"char": 9,
+						"name": "width",
+						"deco": "i",
+						"protection": "public",
+						"offset": 16,
+						"comment": "width of drawing surface\n"
+					},
+					{
+						"line": 21,
+						"kind": "variable",
+						"char": 9,
+						"name": "height",
+						"deco": "i",
+						"protection": "public",
+						"offset": 20,
+						"comment": "height of drawing surface\n"
+					},
+					{
+						"line": 22,
+						"kind": "variable",
+						"char": 9,
+						"name": "btn_height",
+						"deco": "i",
+						"protection": "public",
+						"offset": 24,
+						"comment": "height of buttons\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "_width"
+							},
+							{
+								"deco": "i",
+								"name": "_height"
+							},
+							{
+								"deco": "i",
+								"name": "_btn_height"
+							}
+						],
+						"line": 32,
+						"kind": "constructor",
+						"originalType": "ref (int _width, int _height, int _btn_height)",
+						"char": 5,
+						"name": "this",
+						"deco": "FNciiiZS7SurfaceQi",
+						"protection": "public",
+						"endchar": 4,
+						"endline": 38,
+						"comment": "\n    Constructs Surface Class\n    Params:\n      _width = width of surface\n      _height = height of surface\n      _btn_height = height of button\n"
+					},
+					{
+						"line": 43,
+						"kind": "destructor",
+						"char": 4,
+						"name": "~this",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 4,
+						"endline": 46,
+						"comment": "    Destructs Surface class\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							}
+						],
+						"line": 58,
+						"kind": "function",
+						"char": 10,
+						"name": "UpdateSurfacePixel",
+						"deco": "FiihhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 73,
+						"comment": "    Method that updates color of pixel at a given x, y coordinate on the drawing surface.\n    Params:\n        xPos = position of x coordinate to update the pixel\n        yPos = position of y coordinate to update the pixel\n        r = r value of rgb to update the pixel\n        g = g value of rgb to update the pixel\n        b = b value of rgb to update the pixel\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							}
+						],
+						"line": 83,
+						"kind": "function",
+						"char": 32,
+						"name": "getPixel",
+						"deco": "FiiZS3std8typecons__T5TupleThThThZQn",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 91,
+						"comment": "    Method that checks rgb value of a pixel at a given x,y coordinate\n    Params:\n        xPos = position of x coordinate of pixel to check the color\n        yPos = position of y coordinate of pixel to check the color\n    Returns: Tuple that contains r, g, b values\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							}
+						],
+						"line": 100,
+						"kind": "function",
+						"char": 31,
+						"name": "getbtnPixel",
+						"deco": "FiiZS3std8typecons__T5TupleTiTiTiZQn",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 108,
+						"comment": "    Method that checks rgb value of a pixel at a given x,y coordinate for the btn surface\n    Params:\n        xPos = position of x coordinate of pixel to check the color\n        yPos = position of y coordinate of pixel to check the color\n    Returns: Tuple that contains r, g, b values\n"
+					}
+				],
+				"name": "Surface",
+				"protection": "public",
+				"comment": "Struct that defines surfaces for gui\n"
+			}
+		],
+		"comment": " Struct that defines surface for drawing application (gui)\n",
+		"name": "Surface"
+	},
+	{
+		"kind": "module",
+		"file": "source/Window.d",
+		"members": [
+			{
+				"line": 12,
+				"kind": "struct",
+				"char": 1,
+				"members": [
+					{
+						"line": 13,
+						"kind": "variable",
+						"char": 16,
+						"name": "mWindow",
+						"deco": "PS6bindbc3sdl4bind8sdlvideo10SDL_Window",
+						"protection": "public",
+						"offset": 0,
+						"comment": "window to display the surfaces\n"
+					},
+					{
+						"line": 14,
+						"kind": "variable",
+						"char": 9,
+						"name": "width",
+						"deco": "i",
+						"protection": "public",
+						"offset": 8,
+						"comment": "width of window\n"
+					},
+					{
+						"line": 15,
+						"kind": "variable",
+						"char": 9,
+						"name": "height",
+						"deco": "i",
+						"protection": "public",
+						"offset": 12,
+						"comment": "height of window\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "Pxa",
+								"name": "name"
+							},
+							{
+								"deco": "i",
+								"name": "_width"
+							},
+							{
+								"deco": "i",
+								"name": "_height"
+							}
+						],
+						"line": 24,
+						"kind": "constructor",
+						"originalType": "ref (const(char)* name, int _width, int _height)",
+						"char": 5,
+						"name": "this",
+						"deco": "FNcPxaiiZS6WindowQh",
+						"protection": "public",
+						"endchar": 4,
+						"endline": 33,
+						"comment": "\n    Constructs Window struct\n    Params:\n        name = name of window\n        _width = width of window\n        _height = height of window\n"
+					},
+					{
+						"line": 38,
+						"kind": "destructor",
+						"char": 5,
+						"name": "~this",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 40,
+						"comment": "\n    Destructs Window class.\n"
+					},
+					{
+						"line": 47,
+						"kind": "function",
+						"char": 18,
+						"name": "getWindowSurface",
+						"deco": "FZPS6bindbc3sdl4bind10sdlsurface11SDL_Surface",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 49,
+						"comment": "    Method that gets window of the struct\n    Returns: window\n"
+					},
+					{
+						"line": 56,
+						"kind": "function",
+						"char": 10,
+						"name": "updateWindowSurface",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 58,
+						"comment": "    Method that updates window of the struct\n    Returns: window\n"
+					}
+				],
+				"name": "Window",
+				"protection": "public",
+				"comment": " Struct that defines surface for gui\n"
+			}
+		],
+		"comment": " Struct that defines window for drawing application (gui)\n",
+		"name": "Window"
+	},
+	{
+		"kind": "module",
+		"file": "source/client.d",
+		"members": [
+			{
+				"line": 41,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"line": 42,
+						"kind": "variable",
+						"char": 16,
+						"name": "ret",
+						"deco": "E6bindbc3sdl6config10SDLSupport",
+						"protection": "public",
+						"offset": 16,
+						"comment": "SDL initializer that loads libraries based on user's OS\n"
+					},
+					{
+						"line": 43,
+						"kind": "variable",
+						"char": 9,
+						"name": "width",
+						"deco": "i",
+						"init": "640",
+						"protection": "public",
+						"offset": 20,
+						"comment": "Width of window to run the gui\n"
+					},
+					{
+						"line": 44,
+						"kind": "variable",
+						"char": 9,
+						"name": "height",
+						"deco": "i",
+						"init": "480",
+						"protection": "public",
+						"offset": 24,
+						"comment": "Height of window to run the gui\n"
+					},
+					{
+						"line": 45,
+						"kind": "variable",
+						"originalType": "Socket",
+						"char": 12,
+						"name": "mSocket",
+						"deco": "C3std6socket6Socket",
+						"protection": "public",
+						"offset": 32,
+						"comment": "Socket to receive and send packets to server\n"
+					},
+					{
+						"line": 46,
+						"kind": "variable",
+						"char": 12,
+						"name": "window",
+						"deco": "S6WindowQh",
+						"protection": "public",
+						"offset": 40,
+						"comment": "Window to display gui\n"
+					},
+					{
+						"line": 47,
+						"kind": "variable",
+						"char": 13,
+						"name": "winSurface",
+						"deco": "S7SurfaceQi",
+						"protection": "public",
+						"offset": 56,
+						"comment": "Surface to draw pixels (gui)\n"
+					},
+					{
+						"line": 49,
+						"kind": "variable",
+						"char": 14,
+						"name": "imgDestRect",
+						"deco": "S6bindbc3sdl4bind7sdlrect8SDL_Rect",
+						"protection": "public",
+						"offset": 88,
+						"comment": "Image to overaly onto the buttons\n"
+					},
+					{
+						"line": 50,
+						"kind": "variable",
+						"char": 14,
+						"name": "buttonDestRect",
+						"deco": "S6bindbc3sdl4bind7sdlrect8SDL_Rect",
+						"protection": "public",
+						"offset": 104,
+						"comment": "A Button on the tool bar\n"
+					},
+					{
+						"line": 52,
+						"kind": "variable",
+						"char": 9,
+						"name": "btn_height",
+						"deco": "i",
+						"init": "50",
+						"protection": "public",
+						"offset": 120,
+						"comment": "Height of buttons\n"
+					},
+					{
+						"line": 53,
+						"kind": "variable",
+						"char": 9,
+						"name": "btn_count",
+						"deco": "i",
+						"init": "12",
+						"protection": "public",
+						"offset": 124,
+						"comment": "Number of buttons on the toolbar\n"
+					},
+					{
+						"storageClass": [
+							"const"
+						],
+						"line": 55,
+						"kind": "variable",
+						"originalType": "ubyte",
+						"char": 17,
+						"name": "MAX_BRUSH_SIZE",
+						"deco": "xh",
+						"init": "cast(ubyte)10u",
+						"protection": "public",
+						"offset": 128,
+						"comment": "Maximum size of brush that users can increase\n"
+					},
+					{
+						"storageClass": [
+							"const"
+						],
+						"line": 56,
+						"kind": "variable",
+						"originalType": "ubyte",
+						"char": 17,
+						"name": "MIN_BRUSH_SIZE",
+						"deco": "xh",
+						"init": "cast(ubyte)4u",
+						"protection": "public",
+						"offset": 129,
+						"comment": "Minimum size of brush that users can decrease\n"
+					},
+					{
+						"line": 57,
+						"kind": "variable",
+						"char": 11,
+						"name": "brushSize",
+						"deco": "h",
+						"init": "cast(ubyte)4u",
+						"protection": "public",
+						"offset": 130,
+						"comment": "size of brush (default is 4)\n"
+					},
+					{
+						"line": 58,
+						"kind": "variable",
+						"char": 11,
+						"name": "brushType",
+						"deco": "h",
+						"init": "cast(ubyte)0u",
+						"protection": "public",
+						"offset": 131,
+						"comment": "Type of paint brush (e.g. circle, heart) - default is square\n"
+					},
+					{
+						"line": 59,
+						"kind": "variable",
+						"char": 11,
+						"name": "prevBrushType",
+						"deco": "h",
+						"init": "cast(ubyte)0u",
+						"protection": "public",
+						"offset": 132,
+						"comment": "Variable to save previous paint brush type\n"
+					},
+					{
+						"line": 60,
+						"kind": "variable",
+						"char": 11,
+						"name": "_r",
+						"deco": "h",
+						"init": "cast(ubyte)255u",
+						"protection": "public",
+						"offset": 133,
+						"comment": "r value of current brush\n"
+					},
+					{
+						"line": 61,
+						"kind": "variable",
+						"char": 11,
+						"name": "_g",
+						"deco": "h",
+						"init": "cast(ubyte)0u",
+						"protection": "public",
+						"offset": 134,
+						"comment": "g value of current brush\n"
+					},
+					{
+						"line": 62,
+						"kind": "variable",
+						"char": 11,
+						"name": "_b",
+						"deco": "h",
+						"init": "cast(ubyte)0u",
+						"protection": "public",
+						"offset": 135,
+						"comment": "b value of current brush\n"
+					},
+					{
+						"line": 64,
+						"kind": "variable",
+						"originalType": "Thread",
+						"char": 12,
+						"name": "receiveThread",
+						"deco": "C4core6thread8osthread6Thread",
+						"protection": "public",
+						"offset": 136,
+						"comment": "Thread for receiving packets from server\n"
+					},
+					{
+						"line": 65,
+						"kind": "variable",
+						"char": 10,
+						"name": "isConnectedToServer",
+						"deco": "b",
+						"init": "false",
+						"protection": "public",
+						"offset": 144,
+						"comment": "Flag to check if server is connected\n"
+					},
+					{
+						"line": 66,
+						"kind": "variable",
+						"char": 10,
+						"name": "runApplication",
+						"deco": "b",
+						"protection": "public",
+						"offset": 145,
+						"comment": "Flag to check if application is running\n"
+					},
+					{
+						"line": 69,
+						"kind": "variable",
+						"char": 24,
+						"name": "UndoQueue",
+						"deco": "AC7Command16SurfaceOperation",
+						"protection": "public",
+						"offset": 152,
+						"comment": "Array storing brush mark info of all brush marks, drawn or \"redone\"\n"
+					},
+					{
+						"line": 70,
+						"kind": "variable",
+						"char": 24,
+						"name": "RedoQueue",
+						"deco": "AC7Command16SurfaceOperation",
+						"protection": "public",
+						"offset": 168,
+						"comment": "Array storing brush mark info of \"undone\" marks\n"
+					},
+					{
+						"line": 76,
+						"kind": "constructor",
+						"originalType": "()",
+						"char": 4,
+						"name": "this",
+						"deco": "FZC6client6Client",
+						"protection": "public",
+						"endchar": 3,
+						"endline": 119,
+						"comment": "\n     Constructs Client class\n"
+					},
+					{
+						"storageClass": [
+							"scope"
+						],
+						"line": 125,
+						"kind": "destructor",
+						"char": 5,
+						"name": "~this",
+						"deco": "FNlZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 131,
+						"comment": "\n     Destructs Client class\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "OC3std6socket6Socket",
+								"name": "socket"
+							}
+						],
+						"line": 139,
+						"kind": "function",
+						"originalType": "void(shared Socket socket)",
+						"char": 10,
+						"name": "receiveDataFromServer",
+						"deco": "FOC3std6socket6SocketZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 238,
+						"comment": "    Method that is spawned to receive packets from server\n    Params:\n        socket = Socket to listen from server\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "amount"
+							}
+						],
+						"line": 245,
+						"kind": "function",
+						"char": 10,
+						"name": "changeBrushSize",
+						"deco": "FiZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 259,
+						"comment": "    Helper function that changes the size of the brush\n    Params:\n        amount = amount to change the brush size\n"
+					},
+					{
+						"line": 265,
+						"kind": "function",
+						"char": 10,
+						"name": "erase",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 274,
+						"comment": "    Method that erases pixels on the gui.\n"
+					},
+					{
+						"line": 279,
+						"kind": "function",
+						"char": 10,
+						"name": "undo",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 353,
+						"comment": "    Method that undoes the most recent command by erasing the most recent brush mark\n"
+					},
+					{
+						"line": 358,
+						"kind": "function",
+						"char": 10,
+						"name": "redo",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 431,
+						"comment": "    Method that redoes the most recent undone command by repainting the pixels that were erased\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "color"
+							}
+						],
+						"line": 440,
+						"kind": "function",
+						"char": 10,
+						"name": "changeBrushColor",
+						"deco": "FiZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 460,
+						"comment": "    Helper method that changes color of paint brush\n    Params:\n        color = identifier for color (red = 1, green = 2, blue = 3)\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "h",
+								"name": "strokeType"
+							}
+						],
+						"line": 470,
+						"kind": "function",
+						"char": 18,
+						"name": "createDrawingStrategy",
+						"deco": "FhZC12DrawStrategyQo",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 483,
+						"comment": "    Method that creates instances of paint brush classes.\n    Based on factory design pattern.\n    Params:\n        strokeType = identifier for paint brush (square = 0, 1 = circle, 2 = heart, 3 = spiral, 4 = eraser)\n    Returns: DrawStrategy class based on parameter\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							},
+							{
+								"deco": "h",
+								"name": "r"
+							},
+							{
+								"deco": "h",
+								"name": "g"
+							},
+							{
+								"deco": "h",
+								"name": "b"
+							},
+							{
+								"deco": "h",
+								"name": "brushType"
+							},
+							{
+								"deco": "h",
+								"name": "brushSize"
+							}
+						],
+						"line": 498,
+						"kind": "function",
+						"char": 10,
+						"name": "draw",
+						"deco": "FiihhhhhZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 504,
+						"comment": "    Method that draws pixel on x, y coordinate based on given color, paint brush type, and brush size\n    This method uses factory design pattern.\n    Params:\n        xPos = position of x coordinate to draw the pixel\n        yPos = position of y coordinate to draw the pixel\n        r = r value of rgb to draw the pixel\n        g = g value of rgb to draw the pixel\n        b = b value of rgb to draw the pixel\n        brushType = type of paint brush\n        brushSize = size of paint brush\n"
+					},
+					{
+						"line": 510,
+						"kind": "function",
+						"char": 10,
+						"name": "createButtons",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 607,
+						"comment": "    Method that creates the buttons on the upper margin of the window surface.\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "xPos"
+							},
+							{
+								"deco": "i",
+								"name": "yPos"
+							}
+						],
+						"line": 615,
+						"kind": "function",
+						"char": 10,
+						"name": "ifButtonsClicked",
+						"deco": "FiiZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 711,
+						"comment": "    Method that selects an operation to be performed based on the button that is clicked.\n    Params:\n        xPos = position of x coordinate of the mouse click\n        yPos = position of y coordinate of the mouse click\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "i",
+								"name": "x1"
+							},
+							{
+								"deco": "i",
+								"name": "y1"
+							},
+							{
+								"deco": "i",
+								"name": "x2"
+							},
+							{
+								"deco": "i",
+								"name": "y2"
+							},
+							{
+								"deco": "i",
+								"name": "x"
+							},
+							{
+								"deco": "i",
+								"name": "y"
+							}
+						],
+						"line": 725,
+						"kind": "function",
+						"char": 10,
+						"name": "findPoint",
+						"deco": "FiiiiiiZb",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 734,
+						"comment": "    Helper method that checks if the mouse click is within the boundaries of the button surface\n    Params:\n        x1 = position of the starting x coordinate of button surface\n        y1 = position of the starting y coordinate of button surface\n        x2 = position of the ending x coordinate of button surface\n        y2 = position of the ending y coordinate of button surface\n        x = position of x coordinate of the mouse click\n        y = position of y coordinate of the mouse click\n    Returns: True if mouse click is on button surface, else false.\n"
+					},
+					{
+						"line": 745,
+						"kind": "function",
+						"char": 10,
+						"name": "connectToServer",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 808,
+						"comment": "    Helper method that asks user for IP address and port number of server they want to connect.\n    If the user incorrectly inputs for more than 5 times, the application ends.\n    If the server is closed, it asks the user if they want to start the application offline.\n    Throws:\n        SocketOSException e if server is closed or port number is incorrect\n        Exception e if user input is invalid\n"
+					},
+					{
+						"line": 814,
+						"kind": "function",
+						"char": 10,
+						"name": "setUpServer",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 834,
+						"comment": "    Method that asks if the user wants to start the application online or offline\n"
+					},
+					{
+						"line": 844,
+						"kind": "function",
+						"char": 10,
+						"name": "run",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 5,
+						"endline": 969,
+						"comment": "    Method that runs the application.\n    It runs the application both offline and online.\n    If online, it connects to the server, spawns a thread that listens to the server, and sends packets on a mouse event (draw)\n    If offline, it draws pixels onto the gui.\n    It listens to button click events to manipulate color, brush size, brush types, undo, redo, and erase.\n"
+					}
+				],
+				"name": "Client",
+				"protection": "public",
+				"comment": " Class that runs the drawing application on the client side.\n It connects to server upon user's request and runs the gui for the application.\n"
+			}
+		],
+		"comment": " Class that runs the drawing application on the client side.\n It connects to server and runs the gui for the application.\n Authors: Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao\n",
+		"name": "client"
+	},
+	{
+		"kind": "module",
+		"file": "server/server.d",
+		"members": [
+			{
+				"line": 19,
+				"kind": "function",
+				"char": 8,
+				"name": "getIP",
+				"deco": "FZAa",
+				"protection": "public",
+				"endchar": 1,
+				"endline": 35,
+				"comment": "Function that retrieves local IP address of server\nReturns: local IP address of server as char array\n"
+			},
+			{
+				"line": 42,
+				"kind": "class",
+				"char": 1,
+				"members": [
+					{
+						"parameters": [
+							{
+								"deco": "Aya",
+								"default": "\"localhost\"",
+								"name": "host"
+							},
+							{
+								"deco": "t",
+								"default": "cast(ushort)50002u",
+								"name": "port"
+							},
+							{
+								"deco": "t",
+								"default": "cast(ushort)4u",
+								"name": "maxConnectionsBacklog"
+							}
+						],
+						"line": 50,
+						"kind": "constructor",
+						"originalType": "(string host = \"localhost\", ushort port = 50002, ushort maxConnectionsBacklog = 4)",
+						"char": 2,
+						"name": "this",
+						"deco": "FAyattZC6server9TCPServer",
+						"protection": "public",
+						"endchar": 2,
+						"endline": 61,
+						"comment": "\tConstructs a TCP Server class with given ip address and port\n\tParams:\n\t\thost = IP address of server (default is localhost)\n\t\tport = port to open to communicate with clients (default is 50002)\n\t\tmaxConnectionsBacklog = number of pending connections the server queue will hold (default is 4)\n"
+					},
+					{
+						"storageClass": [
+							"scope"
+						],
+						"line": 67,
+						"kind": "destructor",
+						"char": 2,
+						"name": "~this",
+						"deco": "FNlZv",
+						"protection": "public",
+						"endchar": 2,
+						"endline": 69,
+						"comment": "\tDestructs the instantiated TCP Server class.\n\tClose all sockets upon destruction.\n"
+					},
+					{
+						"line": 77,
+						"kind": "function",
+						"char": 7,
+						"name": "run",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 2,
+						"endline": 107,
+						"comment": "\tMethod that runs TCP server.\n\tIt listens to client calls to join the server,\n\tand spawns new thread that broadcasts all received packets to clients\n"
+					},
+					{
+						"parameters": [
+							{
+								"deco": "C3std6socket6Socket",
+								"name": "clientSocket"
+							}
+						],
+						"line": 115,
+						"kind": "function",
+						"char": 7,
+						"name": "clientLoop",
+						"deco": "FC3std6socket6SocketZv",
+						"protection": "public",
+						"endchar": 2,
+						"endline": 194,
+						"comment": "\tMethod that is spawned to listen and broadcast data recevied from client\n\tParams:\n\t\tclientSocket = Socket to listen and broadcast to client\n"
+					},
+					{
+						"line": 199,
+						"kind": "function",
+						"char": 7,
+						"name": "broadcastToAllClients",
+						"deco": "FZv",
+						"protection": "public",
+						"endchar": 2,
+						"endline": 214,
+						"comment": "\n\t Method that broadcasts packets to all the clients that are currently connected.\n"
+					},
+					{
+						"line": 216,
+						"kind": "variable",
+						"originalType": "Socket",
+						"char": 9,
+						"name": "mListeningSocket",
+						"deco": "C3std6socket6Socket",
+						"protection": "public",
+						"offset": 16,
+						"comment": "The listening socket is responsible for handling new client connections.\n"
+					},
+					{
+						"line": 217,
+						"kind": "variable",
+						"char": 11,
+						"name": "mClientsConnectedToServer",
+						"deco": "AC3std6socket6Socket",
+						"protection": "public",
+						"offset": 24,
+						"comment": "Stores the clients that are currently connected to the server.\n"
+					},
+					{
+						"line": 218,
+						"kind": "variable",
+						"char": 13,
+						"name": "mServerData",
+						"deco": "AG32g",
+						"protection": "public",
+						"offset": 40,
+						"comment": "Stores all of the data on the server.\n"
+					},
+					{
+						"line": 219,
+						"kind": "variable",
+						"char": 9,
+						"name": "mCurrentMessageToSend",
+						"deco": "Ak",
+						"protection": "public",
+						"offset": 56,
+						"comment": "Keeps track of the last message that was broadcast out to each client.\n"
+					}
+				],
+				"name": "TCPServer",
+				"protection": "public",
+				"comment": " Class that runs server.\n It uses TCP to communciate with clients.\n This code is based upon code from Professor Mike Shah's lecture.\n"
+			}
+		],
+		"comment": " Class that runs a server that accepts multiple client connections.\n A thread is spwaned for each client to broadcast packets.\n Authors: Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao\n",
+		"name": "server"
+	},
+	{
+		"kind": "module",
+		"file": "../../../../.dub/packages/vibe-core-2.2.0/vibe-core/source/vibe/appmain.d",
+		"members": [],
+		"comment": "\tProvides vibe based applications with a central program entry point.\n\n\tThis module is included automatically through the import 'vibe.d'. It will provide a default\n\tapplication entry point which parses command line arguments, reads the global vibe configuration\n\tfile, and starts the event loop.\n\n\tThe application itself then just has to initialize itself from within a 'static this' module\n\tconstructor and perform the appropriate calls to listen for connections or other operations.\n\n\tIf you want to provide your own main function, you have to import vibe.vibe instead of\n\tvibe.d and define a -version=VibeCustomMain. Be sure to call vibe.core.core.runEventLoop\n\tat the end of your main function in this case. Also beware that you have to make appropriate\n\tcalls to vibe.core.args.finalizeCommandLineOptions and vibe.core.core.lowerPrivileges to get the\n\tsame behavior.\n\n\tCopyright: © 2012-2016 Sönke Ludwig\n\tLicense: Subject to the terms of the MIT license, as written in the included LICENSE.txt file.\n\tAuthors: Sönke Ludwig\n",
+		"name": "vibe.appmain"
+	}
+]

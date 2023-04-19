@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Class SurfaceOperation</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">vibe
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../vibe/appmain.html">appmain</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../Command.html">Command</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../server.html">server</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Class SurfaceOperation</h1><p>Surface operations implement command interface.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">class</span> <span class="typ">SurfaceOperation</span>
+			<br>&nbsp;&nbsp;: <a href="../Command/Command.html"><span class="typ">Command</span></a>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.this.html" class="public">
+								<code>this</code>
+							</a>
+							<span class="tableEntryAnnotation">(surface, xPos, yPos, r, g, b, brushType, brushSize)</span>
+						</td>
+						<td>Constructs SurfaceOperations
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mB.html" class="public"><code>mB</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ubyte</span></code></td><td>B value of the stored brushmark
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mBrushSize.html" class="public"><code>mBrushSize</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ubyte</span></code></td><td>Size of paint brush the brushmark was made with
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mBrushType.html" class="public"><code>mBrushType</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ubyte</span></code></td><td>Type of paint brush the brushmark was made with (Square, circle, etc.)
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mG.html" class="public"><code>mG</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ubyte</span></code></td><td>G value of the stored brushmark
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mR.html" class="public"><code>mR</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ubyte</span></code></td><td>R value of the stored brushmark
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mSurface.html" class="public"><code>mSurface</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindbc<wbr/></span><span class="pun">.</span><span class="pln">sdl<wbr/></span><span class="pun">.</span><span class="pln">bind<wbr/></span><span class="pun">.</span><span class="pln">sdlsurface<wbr/></span><span class="pun">.</span><span class="typ">SDL_Surface</span><span class="pun">*</span></code></td><td>Pointer to the surface being operated on
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mXPosition.html" class="public"><code>mXPosition</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>Position on the x-axis for target pixel
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.mYPosition.html" class="public"><code>mYPosition</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>Position on the y-axis for target pixel
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.getXPosition.html" class="public">
+								<code>getXPosition</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Getter function for returning x-position of the command
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Command/SurfaceOperation.getYPosition.html" class="public">
+								<code>getYPosition</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Getter function for returning y-position of the command
+</td>
+					</tr>
+				</table>
+			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

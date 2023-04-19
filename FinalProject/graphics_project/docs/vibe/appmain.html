@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module vibe.appmain</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">vibe
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="../vibe/appmain.html">appmain</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Command.html">Command</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../server.html">server</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module vibe.appmain</h1><p>Provides vibe based applications with a central program entry point.
+</p><section><p>This module is included automatically through the import 'vibe.d'. It will provide a default
+	application entry point which parses command line arguments, reads the global vibe configuration
+	file, and starts the event loop.
+</p>
+
+<p>	The application itself then just has to initialize itself from within a 'static this' module
+	constructor and perform the appropriate calls to listen for connections or other operations.
+</p>
+
+<p>	If you want to provide your own main function, you have to import vibe.vibe instead of
+	vibe.d and define a -version=VibeCustomMain. Be sure to call vibe.core.core.runEventLoop
+	at the end of your main function in this case. Also beware that you have to make appropriate
+	calls to vibe.core.args.finalizeCommandLineOptions and vibe.core.core.lowerPrivileges to get the
+	same behavior.
+</p>
+</section>
+
+			<section></section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Sönke Ludwig
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>© 2012-2016 Sönke Ludwig
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>Subject to the terms of the MIT license, as written in the included LICENSE.txt file.
+</p>
+
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Class TCPServer</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">vibe
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../vibe/appmain.html">appmain</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Command.html">Command</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../server.html">server</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Class TCPServer</h1><p>Class that runs server.
+ It uses TCP to communciate with clients.
+ This code is based upon code from Professor Mike Shah's lecture.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">class</span> <span class="typ">TCPServer</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.this.html" class="public">
+								<code>this</code>
+							</a>
+							<span class="tableEntryAnnotation">(host, port, maxConnectionsBacklog)</span>
+						</td>
+						<td>Constructs a TCP Server class with given ip address and port
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.mClientsConnectedToServer.html" class="public"><code>mClientsConnectedToServer</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">socket<wbr/></span><span class="pun">.</span><span class="typ">Socket</span><span class="pun">[]</span></code></td><td>Stores the clients that are currently connected to the server.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.mCurrentMessageToSend.html" class="public"><code>mCurrentMessageToSend</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span><span class="pun">[]</span></code></td><td>Keeps track of the last message that was broadcast out to each client.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.mListeningSocket.html" class="public"><code>mListeningSocket</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">socket<wbr/></span><span class="pun">.</span><span class="typ">Socket</span></code></td><td>The listening socket is responsible for handling new client connections.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.mServerData.html" class="public"><code>mServerData</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">byte</span><span class="pun">[</span><span class="lit">32</span><span class="pun">]</span><span class="pun">[]</span></code></td><td>Stores all of the data on the server.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.broadcastToAllClients.html" class="public">
+								<code>broadcastToAllClients</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Method that broadcasts packets to all the clients that are currently connected.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.clientLoop.html" class="public">
+								<code>clientLoop</code>
+							</a>
+							<span class="tableEntryAnnotation">(clientSocket)</span>
+						</td>
+						<td>Method that is spawned to listen and broadcast data recevied from client
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../server/TCPServer.run.html" class="public">
+								<code>run</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Method that runs TCP server.
+	It listens to client calls to join the server,
+	and spawns new thread that broadcasts all received packets to clients
+</td>
+					</tr>
+				</table>
+			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>

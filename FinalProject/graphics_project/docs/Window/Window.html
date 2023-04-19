@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Window</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+		<nav id="main-nav">
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view collapsed">
+					<div class="package ">vibe
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../vibe/appmain.html">appmain</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../client.html">client</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Command.html">Command</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../DrawStrategy.html">DrawStrategy</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Packet.html">Packet</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../server.html">server</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../Surface.html">Surface</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../Window.html">Window</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Window</h1><p>Struct that defines surface for gui
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">struct</span> <span class="typ">Window</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.this.html" class="public">
+								<code>this</code>
+							</a>
+							<span class="tableEntryAnnotation">(name, _width, _height)</span>
+						</td>
+						<td>Constructs Window struct
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.height.html" class="public"><code>height</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>height of window
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.mWindow.html" class="public"><code>mWindow</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindbc<wbr/></span><span class="pun">.</span><span class="pln">sdl<wbr/></span><span class="pun">.</span><span class="pln">bind<wbr/></span><span class="pun">.</span><span class="pln">sdlvideo<wbr/></span><span class="pun">.</span><span class="typ">SDL_Window</span><span class="pun">*</span></code></td><td>window to display the surfaces
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.width.html" class="public"><code>width</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">int</span></code></td><td>width of window
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.getWindowSurface.html" class="public">
+								<code>getWindowSurface</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Method that gets window of the struct
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../Window/Window.updateWindowSurface.html" class="public">
+								<code>updateWindowSurface</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Method that updates window of the struct
+</td>
+					</tr>
+				</table>
+			</section>
+			
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							
+						</td>
+					</tr>
+				</table>
+				<p class="faint">Generated using the DDOX documentation generator</p>
+			</footer>
+		</div>
+	</body>
+</html>
