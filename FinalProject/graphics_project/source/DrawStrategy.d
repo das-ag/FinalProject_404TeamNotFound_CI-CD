@@ -46,7 +46,8 @@ class DrawSquareStrategy : DrawStrategy {
         b = b value of rgb to draw the pixel
         brushSize = size of square to draw around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
+    {
         for(int w = -brushSize; w < brushSize; w++)
         {
             for(int h = -brushSize; h < brushSize; h++)
@@ -197,6 +198,8 @@ class EraseStrategy : DrawStrategy {
         r = 0;
         g = 0;
         b = 0;
+
+        brushSize = 6;
         
         for(int w = -brushSize; w < brushSize; w++)
         {

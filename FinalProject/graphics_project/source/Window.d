@@ -10,9 +10,9 @@ import loader = bindbc.loader.sharedlib;
  * Struct that defines surface for gui
  */
 struct Window{
-  	SDL_Window* mWindow; /// window to display the surfaces
-    int width;  /// width of window
-    int height; /// height of window
+  	SDL_Window* mWindow;        /// window to display the surfaces
+    int width;                  /// width of window
+    int height;                 /// height of window
     
     /** 
     Constructs Window struct

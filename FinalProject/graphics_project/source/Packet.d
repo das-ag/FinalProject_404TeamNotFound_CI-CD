@@ -11,14 +11,14 @@ Struct that defines Packet for network
 */
 struct Packet {
 
-	char[16] user;   /// name of client
-    int x;		     /// x coordinate of the pixel
-    int y;		     /// y coordinate of the pixel
-    ubyte r;	   	 /// r value of the pixel
-    ubyte g;	  	 /// g value of the pixel
-    ubyte b;		 /// b value of the pixel
-	ubyte brushType;	/// type of paint brush (e.g square, circle, heart)
-	ubyte brushStrokeSize; /// size of brush
+	char[16] user;   		/// name of client
+    int x;		     		/// x coordinate of the pixel
+    int y;		     		/// y coordinate of the pixel
+    ubyte r;	   	 		/// r value of the pixel
+    ubyte g;	  		 	/// g value of the pixel
+    ubyte b;		 		/// b value of the pixel
+	ubyte brushStrokeType;		/// type of paint brush (e.g square, circle, heart)
+	ubyte brushStrokeSize; 	/// size of brush
 
 
 	/**
@@ -40,7 +40,7 @@ struct Packet {
 		memmove(&payload[24], &r, r.sizeof);
 		memmove(&payload[25], &g, g.sizeof);
 		memmove(&payload[26], &b, b.sizeof);
-		memmove(&payload[27], &brushType, brushType.sizeof);
+		memmove(&payload[27], &brushStrokeType, brushStrokeType.sizeof);
 		memmove(&payload[28], &brushStrokeSize, brushStrokeSize.sizeof);
 
         return payload;

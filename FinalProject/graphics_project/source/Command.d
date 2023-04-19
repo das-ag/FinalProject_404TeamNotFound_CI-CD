@@ -8,9 +8,10 @@ import loader = bindbc.loader.sharedlib;
 
 import std.stdio;
 
-
+/**
+Command Interface
+*/
 interface Command {
-    
     int getXPosition();
     int getYPosition();
 }
@@ -29,16 +30,16 @@ class SurfaceOperation : Command {
     ubyte mBrushSize;           /// Size of paint brush the brushmark was made with
 
     /** 
-        Constructs SurfaceOperations
-        Params: 
-            surface = pointer to SDL surface
-            xPos = position on the x-axis of surface 
-            yPos = position on the y-axis of surface
-            r = R value of brushmark
-            g = G value of brushmark    
-            b = B value of brushmark
-            brushType = Type of paint brush the brushmark was made with (Square, circle, etc.)
-            brushSize = Size of paint brush the brushmark was made with
+    Constructs SurfaceOperations
+    Params: 
+        surface = pointer to SDL surface
+        xPos = position on the x-axis of surface 
+        yPos = position on the y-axis of surface
+        r = R value of brushmark
+        g = G value of brushmark    
+        b = B value of brushmark
+        brushType = Type of paint brush the brushmark was made with (Square, circle, etc.)
+        brushSize = Size of paint brush the brushmark was made with
     */
     this(SDL_Surface* surface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushType, ubyte brushSize) {
         mSurface = surface;
@@ -54,21 +55,21 @@ class SurfaceOperation : Command {
     }
 
     /**
-        SurfaceOperation destructor
+    SurfaceOperation destructor
     */
     ~this() {
 
     }
 
     /**
-        Getter function for returning x-position of the command
+    Getter function for returning x-position of the command
     */
     int getXPosition() {
         return mXPosition;
     }
 
     /**
-        Getter function for returning y-position of the command
+    Getter function for returning y-position of the command
     */
     int getYPosition() {
         return mYPosition;

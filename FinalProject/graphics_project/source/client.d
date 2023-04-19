@@ -1,6 +1,7 @@
 /***
  * Class that runs the drawing application on the client side.
  * It connects to server and runs the gui for the application.
+ * Authors: Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao
  */
 
 module client;
@@ -38,24 +39,24 @@ import std.typecons: tuple, Tuple;
  It connects to server upon user's request and runs the gui for the application.
  */
 class Client {
-    SDLSupport ret;        /// SDL initializer that loads libraries based on user's OS
-    int width = 640;       /// Width of window to run the gui
-    int height = 480;      /// Height of window to run the gui
-    Socket mSocket;        /// Socket to receive and send packets to server
-    Window window;         /// Window to display gui
-    Surface winSurface;    /// Surface to draw pixels (gui)
+    SDLSupport ret;                     /// SDL initializer that loads libraries based on user's OS
+    int width = 640;                    /// Width of window to run the gui
+    int height = 480;                   /// Height of window to run the gui
+    Socket mSocket;                     /// Socket to receive and send packets to server
+    Window window;                      /// Window to display gui
+    Surface winSurface;                 /// Surface to draw pixels (gui)
 
-    SDL_Rect imgDestRect;    /// Image to overaly onto the buttons
-    SDL_Rect buttonDestRect; /// A Button on the tool bar
+    SDL_Rect imgDestRect;               /// Image to overaly onto the buttons
+    SDL_Rect buttonDestRect;            /// A Button on the tool bar
 
-    int btn_height = 50;   /// Height of buttons
-    int btn_count = 12;    /// Number of buttons on the toolbar
+    int btn_height = 50;                /// Height of buttons
+    int btn_count = 12;                 /// Number of buttons on the toolbar
 
     const ubyte MAX_BRUSH_SIZE = 10;    /// Maximum size of brush that users can increase
     const ubyte MIN_BRUSH_SIZE = 4;     /// Minimum size of brush that users can decrease
     ubyte brushSize = 4;                /// size of brush (default is 4) 
-    ubyte brushStrokeType = 0;          /// Type of paint brush (e.g. circle, heart) - default is square
-    ubyte prevBrushStroketype = 0;      /// Variable to save previous paint brush type
+    ubyte brushType = 0;                /// Type of paint brush (e.g. circle, heart) - default is square
+    ubyte prevBrushType = 0;            /// Variable to save previous paint brush type
     ubyte _r = 255;                     /// r value of current brush
     ubyte _g = 0;                       /// g value of current brush
     ubyte _b = 0;                       /// b value of current brush
@@ -69,9 +70,8 @@ class Client {
     SurfaceOperation[] RedoQueue;       /// Array storing brush mark info of "undone" marks
 
 
-
     /** 
-     Constructs Client class.
+     Constructs Client class
      */
  	 this(){
         // Handle initialization...
@@ -108,7 +108,7 @@ class Client {
         }
 
         // Initialize SDL
-        if(SDL_Init(SDL_INIT_EVERYTHING) !=0){
+        if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
             writeln("SDL_Init: ", fromStringz(SDL_GetError()));
         }        
 
@@ -158,7 +158,7 @@ class Client {
 
             actualReceivedBytes = cast(int)received;
 
-            // if the server is closed, 
+            // If the server is closed, 
             // close the socket and make it into an offline app
             if (actualReceivedBytes == 0) {
                 isConnectedToServer = false;
@@ -167,9 +167,10 @@ class Client {
 
             writeln("acutal bytes: ", actualReceivedBytes);
     
-            // check if all the bytes are received from server
-            // if not save bytes to a dummy buffer until 
-            // all the bytes are received
+            // Check if all the bytes are received from server
+            // If not save bytes to a dummy buffer until 
+            // all the bytes are received.
+            // When all the bytes are received, then draw the pixels onto the surface
             if (actualReceivedBytes > 0) {
 
                 if (missingBytes == 0 && actualReceivedBytes < expectedBytesToReceive) {
@@ -207,8 +208,8 @@ class Client {
             if (actualReceivedBytes > 0 && dummyBuffer.length == 0) {
 
                 // Unpack packet
-                byte[4] field1 =  finalBuffer[16 .. 20].dup;
-                byte[4] field2 =  finalBuffer[20 .. 24].dup;
+                byte[4] field1 = finalBuffer[16 .. 20].dup;
+                byte[4] field2 = finalBuffer[20 .. 24].dup;
 
                 int rX = *cast(int*)&field1;
                 int rY = *cast(int*)&field2;
@@ -217,9 +218,9 @@ class Client {
                 ubyte rGreen = cast(ubyte)finalBuffer[25];
                 ubyte rBlue = cast(ubyte)finalBuffer[26];   
                 ubyte rBrushType = cast(ubyte)finalBuffer[27];
-                ubyte rBrushSize =  cast(ubyte)finalBuffer[28];
+                ubyte rBrushSize = cast(ubyte)finalBuffer[28];
 
-                // TODO: delete this for clean up
+                // For Debugging: Check what we unpacked
                 writeln("rx: ", rX);
                 writeln("rY: ", rY);
                 writeln("r: ", rRed);
@@ -228,29 +229,29 @@ class Client {
                 writeln("brushType: ", rBrushType);
                 writeln("brushSize: ", rBrushSize);
 
-                // draw pixels onto the surface of gui based on information unpacked from packet
+                // Draw pixels onto the surface of gui based on information unpacked from packet
                 draw(rX, rY, rRed, rGreen, rBlue, rBrushType, rBrushSize);            
-        }
+            }
 
         }
 
     }
 
     /**
-    Helper method that changes the size of the brush    
+    Helper function that changes the size of the brush    
     Params:
         amount = amount to change the brush size
     */
     void changeBrushSize(int amount) {
         brushSize += amount;
 
-        // constrain the max size of brush to 10
+        // Constrain the max size of brush to 10
         if (brushSize > MAX_BRUSH_SIZE) 
         {
             brushSize = MAX_BRUSH_SIZE;
         }
         
-        // constrain the min size of brush to 4
+        // Constrain the min size of brush to 2
         if (brushSize < MIN_BRUSH_SIZE) 
         {
             brushSize = MIN_BRUSH_SIZE;
@@ -263,12 +264,13 @@ class Client {
     */
     void erase() {
         // Save previous paint brush type
-        if (brushStrokeType != 4) {
-            prevBrushStroketype = brushStrokeType;
+        // So that users can revert back when done using the eraser
+        if (brushType != 4) {
+            prevBrushType = brushType;
         }
 
         // Set the paint brush type to eraser
-        brushStrokeType = 4;
+        brushType = 4;
     }
 
     /**
@@ -283,20 +285,20 @@ class Client {
 
             // Each pixel is considered a command
             // Undo the last 10 marks made 
-            for(int i=1; i<11; i++) {
+            for(int i = 1; i < 11; i++) {
                 if (UndoQueue.length != 0) {
 
                     // Store the current brushStrokeType to return to it after undoing
-                    auto storedBrushStrokeType = this.brushStrokeType;
+                    auto storedBrushStrokeType = this.brushType;
 
                     Packet p;
 
                     // The command being done is the most recent addition to the queue
                     // This is the previous state of that area of pixels before the last mark was made
-                    SurfaceOperation c = UndoQueue[$-1];
+                    SurfaceOperation c = UndoQueue[$ - 1];
 
                     // Set the shape of our paintbrush equal to the target mark's brush shape
-                    this.brushStrokeType = c.mBrushType;
+                    this.brushType = c.mBrushType;
 
                     // Store the state of pixels before undoing is performed
                     // These colors are stored for the redo command
@@ -317,7 +319,6 @@ class Client {
                             brushType = c.mBrushType;  
                         }
 
-
                         // writeln("sending packing",p);
                         mSocket.send(p.GetPacketAsBytes());
 
@@ -333,19 +334,16 @@ class Client {
                     // Create a new command
                     // The r, g, b values are the color of the pixels before the undo was called
                     // The brush type and brush size is the same as the initial mark made
-                    auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                            c.mBrushType, c.mBrushSize);
+                    auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, prev_pixel[0],      
+                                                            prev_pixel[1], prev_pixel[2],c.mBrushType, c.mBrushSize);
                     // Append the command onto the redoQueue
                     RedoQueue ~= prev_state;
 
-
-                                    
-
                     // Remove the last command from the queue
-                    UndoQueue = UndoQueue[0..$-1];
+                    UndoQueue = UndoQueue[0 .. $ - 1];
 
                     // Then set the brushStrokeType back to what it was before the undo event
-                    this.brushStrokeType = storedBrushStrokeType;
+                    this.brushType = storedBrushStrokeType;
 
                 }
 
@@ -366,22 +364,21 @@ class Client {
             // Treat "Redoing" like drawing pixels, add it to the undo queue
             // Each mark is considered a command         
             // 10 marks are redone for each call of redo()
-            for(int i=1; i<11; i++) {
+            for(int i = 1; i < 11; i++) {
                 if (RedoQueue.length != 0) {
 
                     // Store the current brushStrokeType to return to it after redoing
-                    auto storedBrushStrokeType = this.brushStrokeType;
+                    auto storedBrushStrokeType = this.brushType;
 
                     Packet p;
 
                     // The command being done is the most recent addition to the queue
                     // This is the previous state of that area of pixels before the last undo was called
-                    SurfaceOperation c = RedoQueue[$-1];
+                    SurfaceOperation c = RedoQueue[$ - 1];
 
                     // Set the shape equal to the undone mark's brush shape
-                    this.brushStrokeType = c.mBrushType;
+                    this.brushType = c.mBrushType;
                                         
-
                     // Store the state of pixels before redoing is performed
                     // These colors are stored for the undo command
                     Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(c.getXPosition(), c.getYPosition());
@@ -398,7 +395,7 @@ class Client {
                             g = c.mG;
                             b = c.mB;
                             brushStrokeSize = c.mBrushSize;
-                            brushType = c.mBrushType;
+                            brushStrokeType = c.mBrushType;
                         }
 
                         //writeln("sending packing",p);
@@ -416,15 +413,15 @@ class Client {
                     // Create a new command
                     // The r, g, b values of commands are the color of the PREVIOUS pixel
                     auto prev_state = new SurfaceOperation(winSurface.mSurface, c.mXPosition, c.mYPosition, 0, 0, 0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                            this.brushStrokeType, this.brushSize);//brushStrokeType, brushSize);
+                                                            this.brushType, this.brushSize);//brushStrokeType, brushSize);
                     UndoQueue ~= prev_state;
 
 
                     // Remove the last command from the queue
-                    RedoQueue = RedoQueue[0..$-1];
+                    RedoQueue = RedoQueue[0 .. $ - 1];
 
                     // Then set the brushStrokeType back to what it was before the redo event
-                    this.brushStrokeType = storedBrushStrokeType;
+                    this.brushType = storedBrushStrokeType;
             
                 }
 
@@ -470,7 +467,7 @@ class Client {
         strokeType = identifier for paint brush (square = 0, 1 = circle, 2 = heart, 3 = spiral, 4 = eraser)
     Returns: DrawStrategy class based on parameter
     */
-   DrawStrategy createDrawingStrategy(ubyte strokeType) {
+    DrawStrategy createDrawingStrategy(ubyte strokeType) {
         final switch (strokeType) {
             case 0:
                 return new DrawSquareStrategy;
@@ -507,105 +504,105 @@ class Client {
     }
 
 
-     /**
+    /**
     Method that creates the buttons on the upper margin of the window surface.
     */
     void createButtons(){
         // Create the destination rectangles:
         // ImgDestRect is the destination rect for image surface aka the canvas
         // buttonDestRect is the destination rect for button surface for control            
-        imgDestRect.x = 0; // Position the first surface on the bottom
+        imgDestRect.x = 0;                  // Position the first surface on the bottom
         imgDestRect.y = 100;
-        imgDestRect.w = width;    // Use the surface1 width
-        imgDestRect.h = height;    // Use the surface1 height
+        imgDestRect.w = width;              // Use the surface1 width
+        imgDestRect.h = height;             // Use the surface1 height
 
-        buttonDestRect.x = 0; // Position the second surface on the top
+        buttonDestRect.x = 0;               // Position the second surface on the top
         buttonDestRect.y = 0;
-        buttonDestRect.w = width;    // Use the surface2 width
-        buttonDestRect.h = btn_height;    // Use the surface2 height
+        buttonDestRect.w = width;           // Use the surface2 width
+        buttonDestRect.h = btn_height;      // Use the surface2 height
         
-        // create a button for changing color to Red
+        // Create a button for changing color to Red
         SDL_Color HoverColor = { to!ubyte(255), to!ubyte(0), to!ubyte(0), 255 };
-        SDL_Rect rect = SDL_Rect(0*width/btn_count, 5, width/btn_count, btn_height);
+        SDL_Rect rect = SDL_Rect(0 * width / btn_count, 5, width / btn_count, btn_height);
         uint mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor.r, HoverColor.g, HoverColor.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // create a button for changing color to Green
+        // Create a button for changing color to Green
         SDL_Color HoverColor2 = { to!ubyte(0), to!ubyte(255), to!ubyte(0), 255 };
-        rect = SDL_Rect(1*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(1 * width / btn_count, 5, width / btn_count, btn_height);
         mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor2.r, HoverColor2.g, HoverColor2.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // create a button for changing color to Blue
+        // Create a button for changing color to Blue
         SDL_Color HoverColor3 = { to!ubyte(0), to!ubyte(0), to!ubyte(255), 255 };
         rect = SDL_Rect(2*width/btn_count, 5, width/btn_count, btn_height);
         mappedColor = SDL_MapRGB(winSurface.btnSurface.format, HoverColor3.r, HoverColor3.g, HoverColor3.b);
         SDL_FillRect(winSurface.btnSurface, &rect, mappedColor);
 
-        // create a button for changing brush type to Square
+        // Create a button for changing brush type to Square
         SDL_Rect imgRect;
-        imgRect.x = 3*width/btn_count;  // defines the starting x coordiate position of the button
-        imgRect.y = 5; // defines the starting y coordiate position of the button
-        imgRect.w = width; // defines the width of the button
-        imgRect.h = btn_height; // defines the height of the button
+        imgRect.x = 3 * width / btn_count;      // defines the starting x coordiate position of the button
+        imgRect.y = 5;                          // defines the starting y coordiate position of the button
+        imgRect.w = width;                      // defines the width of the button
+        imgRect.h = btn_height;                 // defines the height of the button
         SDL_Surface* imgBtnSurface = SDL_LoadBMP("source/images/square_brush.bmp");
-        rect = SDL_Rect(3*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(3 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for changing brush type to circle
-        imgRect.x = 4*width/btn_count; 
+        // Create a button for changing brush type to circle
+        imgRect.x = 4 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/round_brush.bmp");
-        rect = SDL_Rect(4*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(4 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for changing brush type to hearts
-        imgRect.x = 5*width/btn_count; 
+        // Create a button for changing brush type to hearts
+        imgRect.x = 5 * width / btn_count;
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/heart_brush.bmp");
-        rect = SDL_Rect(5*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(5 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for changing brush type to spiral
-        imgRect.x = 6*width/btn_count; 
+        // Create a button for changing brush type to spiral
+        imgRect.x = 6 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/spiral_brush.bmp");
-        rect = SDL_Rect(6*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(6 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for increasing brush size
-        imgRect.x = 7*width/btn_count; 
+        // Create a button for increasing brush size
+        imgRect.x = 7 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/brush_up.bmp");
-        rect = SDL_Rect(7*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(7 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for decreasing brush size
-        imgRect.x = 8*width/btn_count; 
+        // Create a button for decreasing brush size
+        imgRect.x = 8 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/brush_down.bmp");
-        rect = SDL_Rect(8*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(8 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for undo
-        imgRect.x = 9*width/btn_count; 
+        // Create a button for undo
+        imgRect.x = 9 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/undo_button.bmp");
-        rect = SDL_Rect(9*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(9 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for redo
-        imgRect.x = 10*width/btn_count; 
+        // Create a button for redo
+        imgRect.x = 10 * width / btn_count; 
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/redo_button.bmp");
-        rect = SDL_Rect(10*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(10 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
 
-        // create a button for eraser
-        imgRect.x = 11*width/btn_count;
+        // Create a button for eraser
+        imgRect.x = 11 * width / btn_count;
         imgRect.y = 5; 
         imgBtnSurface = SDL_LoadBMP("source/images/eraser.bmp");
-        rect = SDL_Rect(11*width/btn_count, 5, width/btn_count, btn_height);
+        rect = SDL_Rect(11 * width / btn_count, 5, width / btn_count, btn_height);
         SDL_BlitSurface(imgBtnSurface, null, winSurface.btnSurface, &imgRect);
     }
 
@@ -616,96 +613,106 @@ class Client {
         yPos = position of y coordinate of the mouse click
     */
     void ifButtonsClicked(int xPos, int yPos){
-        // check if the mouse click is within the boundaries of the button surface
+        // Check if the mouse click is within the boundaries of the button surface
         if (findPoint(0, 0, width, btn_height, xPos, yPos)){
             // Select the operation to be performed based on the position of the mouse click
-            switch(xPos / (width/btn_count) ){
+            switch (xPos / (width/btn_count) ){
+                // Change color to Red
                 case 0:
-                    writeln("Brush Color changed to: RED!!!!");
-                    if (this.brushStrokeType == 4) {
-                        createDrawingStrategy(prevBrushStroketype);
-                        brushStrokeType = prevBrushStroketype;
+                    // writeln("Brush Color changed to: RED!!!!");
+                    if (this.brushType == 4) {
+                        createDrawingStrategy(prevBrushType);
+                        brushType = prevBrushType;
                     }
                     changeBrushColor(1);
                     break;
 
+                // Change color to Green
                 case 1:
-                    writeln("Brush Color changed to: GREEN!!!!");
-                    if (this.brushStrokeType == 4) {
-                        createDrawingStrategy(prevBrushStroketype);
-                        brushStrokeType = prevBrushStroketype;
+                    // writeln("Brush Color changed to: GREEN!!!!");
+                    if (this.brushType == 4) {
+                        createDrawingStrategy(prevBrushType);
+                        brushType = prevBrushType;
                     }
                     changeBrushColor(2);
                     break;
 
+                // Change color to blue
                 case 2:
-                    writeln("Brush Color changed to: BLUE!!!!");
-                    if (this.brushStrokeType == 4) {
-                        createDrawingStrategy(prevBrushStroketype);
-                        brushStrokeType = prevBrushStroketype;
+                    // writeln("Brush Color changed to: BLUE!!!!");
+                    if (this.brushType == 4) {
+                        createDrawingStrategy(prevBrushType);
+                        brushType = prevBrushType;
                     }
                     changeBrushColor(3);
                     break;
 
+                // Change paint brush to square
                 case 3:
-                    writeln("Brush Type changed to: SQUARE!!!!");
-                    this.brushStrokeType = 0;
+                    // writeln("Brush Type changed to: SQUARE!!!!");
+                    this.brushType = 0;
                     break;
 
+                // Change paint brush to circle
                 case 4:
-                     writeln("Brush Type changed to: CIRCLE!!!!");
-                    this.brushStrokeType = 1;
+                    // writeln("Brush Type changed to: CIRCLE!!!!");
+                    this.brushType = 1;
                     break;
 
+                // Change paint brush to heart
                 case 5:
-                     writeln("Brush Type changed to: HEART!!!!");
-                    this.brushStrokeType = 2;
+                    // writeln("Brush Type changed to: HEART!!!!");
+                    this.brushType = 2;
                     break;
 
+                // Change paint brush to spiral
                 case 6:
-                     writeln("Brush Type changed to: SPIRAL!!!!");
-                    this.brushStrokeType = 3;
+                    // writeln("Brush Type changed to: SPIRAL!!!!");
+                    this.brushType = 3;
                     break;
 
+                // Increase brush size
                 case 7:
-                    writeln("Brush Size Increased!!!!");
+                    // writeln("Brush Size Increased!!!!");
                     changeBrushSize(1);
                     break;
 
+                // Decrease brush size
                 case 8:
-                    writeln("Brush Size Decreased!!!!");
+                    // writeln("Brush Size Decreased!!!!");
                     changeBrushSize(-1);
                     break;
-                case 9:
-                    writeln("Undo!!!!");
 
+                // Undo
+                case 9:
+                    // writeln("Undo!!!!");
                     // Call the undo function to remove the last 10 marks
                     undo();
-
                     break;
-                case 10:
-                    writeln("Redo!!!!");
 
+                // Redo
+                case 10:
+                    // writeln("Redo!!!!");
                     // Call the redo function to add back the last 10 undone marks
                     redo();
-
                     break;
+
+                // Erase
                 case 11:
-                    writeln("Erase!!!!");
+                    // writeln("Erase!!!!");
                     erase();
                     break;
-                default:
-                    // operations to execute if the expression is not equal to any case
-                    // ...
-                    break;
                 
+                // In case user presses on incorrect space
+                default:
+                    break;
             }
         }
     }
 
 
     /**
-    Method that checks if the mouse click is within the boundaries of the button surface
+    Helper method that checks if the mouse click is within the boundaries of the button surface
     Params:
         x1 = position of the starting x coordinate of button surface
         y1 = position of the starting y coordinate of button surface
@@ -720,7 +727,7 @@ class Client {
         // If the mouse click is within the boundaries of button surface,
         // then return true, else return false.
         if (x > x1 && x < x2 && y > y1 && y < y2){
-            writeln("button clicked!!!!");
+            // writeln("button clicked!!!!");
             return true;
         }
         return false;
@@ -728,9 +735,9 @@ class Client {
 
 
     /**
-    Helper method that asks user for IP address and port number of server they want to connect to.
+    Helper method that asks user for IP address and port number of server they want to connect.
     If the user incorrectly inputs for more than 5 times, the application ends.
-    If the server is closed, asks the user if they want to start the application offline.
+    If the server is closed, it asks the user if they want to start the application offline.
     Throws: 
         SocketOSException e if server is closed or port number is incorrect
         Exception e if user input is invalid
@@ -801,7 +808,6 @@ class Client {
     }
 
 
-
     /**
     Method that asks if the user wants to start the application online or offline
     */   
@@ -815,12 +821,6 @@ class Client {
 
             if (answer == "y") 
             {
-                // TODO: Asking for user name causes error from memory..?
-                // writeln("Great!");
-                // writeln("Enter a username: ");
-                // write("> ");
-                // clientName = strip(readln); 
-
                 connectToServer();
                 break;
             }
@@ -906,18 +906,21 @@ class Client {
                                 g = _g;
                                 b = _b;
                                 brushStrokeSize = brushSize;
-                                brushType = brushStrokeType;
+                                brushStrokeType = brushType;
                             }
+
+                            SurfaceOperation prev_state;
 
                             // Create a new command
                             // The r, g, b values of commands are the color of the pixel BEFORE painting is done
-                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0,0,0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                                   this.brushStrokeType, this.brushSize);//brushStrokeType, brushSize);
+                            prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0, 
+                                                                this.brushType, this.brushSize);
                             // Append the "before" pixel to the undo queue
-                            UndoQueue ~= prev_state;
 
-                            // TODO: Need to clean this after checking packet size for undo
-                            writeln(p.sizeof);
+                            // Debuging purpose: Need to clean this after checking packet size for undo
+                            // writeln(p.sizeof);
+                            
+                            UndoQueue ~= prev_state;
 
                             // Send pixel to server
                             mSocket.send(p.GetPacketAsBytes());
@@ -928,21 +931,22 @@ class Client {
                             // Store the state of pixels before painting over them
                             Tuple!(ubyte, ubyte, ubyte) prev_pixel = winSurface.getPixel(xPos, yPos);
                            
-                            draw(xPos, yPos, _r, _g, _b, brushStrokeType, brushSize);
+                            draw(xPos, yPos, _r, _g, _b, brushType, brushSize);
 
 
                             // Create a new command based on the action just performed
                             // The r, g, b values of commands are the color of the pixel before being painted over
-                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0,//prev_pixel[0], prev_pixel[1], prev_pixel[2], 
-                                                                   this.brushStrokeType, this.brushSize);//this.brushStrokeType, this.brushSize);
+                            auto prev_state = new SurfaceOperation(winSurface.mSurface, xPos, yPos, 0, 0, 0, 
+                                                                    this.brushType, this.brushSize);
                             UndoQueue ~= prev_state;
-                            writeln("Undo length:");
-                            writeln(UndoQueue.length);
+                            // writeln("Undo length:");
+                            // writeln(UndoQueue.length);
                         }
         
                     }
                 }
-                else if(xPos < width && yPos <= btn_height){
+                else if(xPos < width && yPos <= btn_height)
+                {
                     // button functions
                     if(e.type == SDL_MOUSEBUTTONUP){
                         ifButtonsClicked(xPos, yPos);
