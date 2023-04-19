@@ -37,8 +37,7 @@
 			"dependencies": {
 				"bindbc-sdl": "~>1.2.4",
 				"bindbc-loader": "1.0.1",
-				"unit-threaded": "~>2.1.5",
-				"ddox": "~>0.16.22"
+				"unit-threaded": "~>2.1.5"
 			}
 		},
 		{
@@ -48,7 +47,10 @@
 			"targetType": "executable",
 			"dependencies": {
 				"ddox": "~>0.16.22"
-			}
+			},
+			"excludedSourceFiles": [
+				"source/test/*"
+			]
 		}
 		
 	],
