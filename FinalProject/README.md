@@ -49,3 +49,5 @@ To generate ddox
 
 
 ## Future Implementation
+- Wider range of brush colors and types
+- Include additional undo/redo functionality such as undoing eraser marks, etc. 
