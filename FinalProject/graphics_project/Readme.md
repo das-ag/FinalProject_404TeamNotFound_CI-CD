@@ -1,5 +1,5 @@
 #  Collaborative Painting - 404 Team Not Found
-Collaborative Paint is a desktop application that allows multiple users to paint collaboratively in real-time.  It is developed by Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, and Jiayue Zhao. The Paint Factory requested this application to facilitate remote collaboration between teams. As users draw on one application, it updates in real-time on all others who have joined the session.
+Collaborative Paint is a **Mac** desktop application that allows multiple users to paint collaboratively in real-time.  It is developed by Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, and Jiayue Zhao. The Paint Factory requested this application to facilitate remote collaboration between teams. As users draw on one application, it updates in real-time on all others who have joined the session.
 
 # Demo video
 // TODO: add demo video link
@@ -22,7 +22,7 @@ The Collaborative Paint application allows users to connect to a server and coll
 
 # How to Run
 Clone or download the project repository to your local machine.
-Open a terminal and navigate to the project root directory.
+Open a terminal and navigate to the project's [root directory](/FinalProject/graphics_project/).
 
 ## Starting a server
 * Run ‘dub run -c=Server’ in the terminal to build and run the server application.
@@ -64,13 +64,13 @@ We commented out the unittest on testNework.d for CI/CD purposes. Please uncomme
 
 # Design Pattern
 
-To implement different types of paint brushes (e.g. heart, circle, square, spiral) we used a **factory method pattern**. We chose factory method pattern as it enables instantiation of new paint brush classes during runtime without having to define a new paint brush class everytime a user presses a button for change in paint brush type. Moreover, with the factory design pattern, adding a new paint brush type is more flexible as it is decoupled from the implementation.
+To implement different types of paint brushes (e.g. heart, circle, square, spiral) we used a **factory method pattern**. We chose factory method pattern as it enables instantiation of new paint brush classes during runtime without having to define a new paint brush class everytime a user presses a button for change in paint brush type. Moreover, with the factory design pattern, adding a new paint brush type is more flexible as it is decoupled from the application's implementation.
 
 
 # Future Implementation
 - Wider range of brush colors and types
 - Include additional undo/redo functionality such as undoing eraser marks, etc. 
-
+- Network Chat
 
 # Project Board
 
