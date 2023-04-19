@@ -15,7 +15,6 @@ The Collaborative Paint application allows users to connect to a server and coll
 * Connecting to a server and collaborating in real-time.
 * Saving and opening drawings.
 
-
 # Prerequisites
 * DUB package manager
 * D language compiler
@@ -63,12 +62,16 @@ All our unittest cases pass. However, `Invalid memory operation Exception` is ra
 
 We commented out the unittest on testNework.d for CI/CD purposes. Please uncomment when running the test.  
 
+# Design Pattern
 
-## Future Implementation
+To implement different types of paint brushes (e.g. heart, circle, square, spiral) we used a **factory method pattern**. We chose factory method pattern as it enables instantiation of new paint brush classes during runtime without having to define a new paint brush class everytime a user presses a button for change in paint brush type. Moreover, with the factory design pattern, adding a new paint brush type is more flexible as it is decoupled from the implementation.
+
+
+# Future Implementation
 - Wider range of brush colors and types
 - Include additional undo/redo functionality such as undoing eraser marks, etc. 
 
 
-## Project Board
+# Project Board
 
 https://github.com/orgs/Spring23FSE/projects/191/views/1
