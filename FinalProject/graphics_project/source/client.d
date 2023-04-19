@@ -201,6 +201,7 @@ class Client {
                 writeln("break thread!");
                 break;
             }
+            
             // If all the packets are received, draw on surface
             if (actualReceivedBytes > 0 && dummyBuffer.length == 0) {
 

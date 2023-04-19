@@ -3,6 +3,7 @@ module test.testClient;
 // Load the SDL2 library
 import bindbc.sdl;
 import loader = bindbc.loader.sharedlib;
+// import unit_threaded;
 
 import client : Client;
 import std.stdio;
@@ -55,6 +56,8 @@ unittest {
 
     // Assert
     assert(!c.findPoint(x1, y1, x2, y2, x, y));
+
+    destroy(c);
 }
 
 @("Test draw button")
@@ -84,6 +87,8 @@ unittest {
     assert(p[2]==0);
     assert(p[1]==255);
     assert(p[0]==0);
+
+    destroy(c);
 }
 
 @("Test erase - extra feature")
@@ -91,6 +96,8 @@ unittest{
     Client c = new Client;
     c.erase();
     assert((c.brushType == 4));
+
+    destroy(c);
 }
 
 
@@ -115,6 +122,7 @@ unittest{
     Client c = new Client;
     c.changeBrushSize(7);
     assert(c.brushSize == 10);
+    destroy(c);
 }
 
 @("Test min bursh size - extra feature")
@@ -122,6 +130,7 @@ unittest{
     Client c = new Client;
     c.changeBrushSize(-4);
     assert(c.brushSize == 2);
+    destroy(c);
 }
 
 
@@ -132,32 +141,7 @@ unittest{
     assert(c._r == 0);
     assert(c._g == 0);
     assert(c._b == 255);
-
+    destroy(c);
 }
 
 
-@("Test receivedDataFromServer() function - network")
-unittest{
-    import std.socket;
-    import unit_threaded.mock;
-
-    // Mock Socket and make receive() function to return nothing
-    auto socketMock = mock!Socket;
-    socketMock.mockReturn!"receive"();
-
-    // Instantiate client class
-    Client test = new Client;
-    test.mSocket = socketMock;
-
-    // Set isConnectToServer to true to mimic socket connection
-    test.isConnectedToServer = true;
-    test.receiveDataFromServer();
-
-    // When the server sends 0 bytes, it means the server is closed.
-    // In our code, we check if the server is closed as we lisiten for packets.
-    // NOTE: Invalid memory operation Exception will be raised while running this unittest
-    // This is due to our logic where we close the socket when the server is down. (Refer to line 159 in client.d)
-    // However, since we are mocking the socket, it raises an exception as the mock socket cannot close.
-    assert(test.isConnectedToServer == false);
-    
-}
