@@ -10,46 +10,53 @@
 		{
 			"name": "Client",
 			"mainSourceFile": "source/client.d",
+			"targetName": "client",
 			"targetType": "executable",
-			"targetName": "client"
+			"excludedSourceFiles": [
+				"server/server.d",
+				"source/test/*"
+			]
 		},
 		{
 			"name": "Server",
 			"mainSourceFile": "server/server.d",
 			"targetName": "server",
+			"targetType": "executable",
 			"excludedSourceFiles": [
-				"source/SDLApp.d",
+				"source/client.d",
 				"source/test/*"
+			]
+		},
+		{
+			"name": "unittest",
+			"mainSourceFile": "source/client.d",
+			"preBuildCommands": [
+				"dub run unit-threaded --compiler=ldc2 -c gen_ut_main -- -f bin/ut.d -d dub"
 			],
-			"targetType": "executable"
-		},
-		{
-			"name": "executable",
-			"targetType": "executable"
-		},
-		{
+			"targetType": "executable",
 			"dependencies": {
 				"bindbc-sdl": "~>1.2.4",
 				"bindbc-loader": "1.0.1",
 				"unit-threaded": "~>2.1.5",
 				"ddox": "~>0.16.22"
-			},
-			"excludedSourceFiles": [
-				"source/app.d"
-			],
+			}
+		},
+		{
+			"name": "ddox",
 			"mainSourceFile": "source/client.d",
-			"name": "unittest",
-			"preBuildCommands": [
-				"dub run unit-threaded --compiler=ldc2 -c gen_ut_main -- -f bin/ut.d -d dub"
-			],
-			"targetType": "executable"
+			"sourceFiles": ["server/server.d"],
+			"targetType": "executable",
+			"dependencies": {
+				"ddox": "~>0.16.22"
+			}
 		}
+		
 	],
 	"copyright": "Copyright © 2023, Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao",
 	"dependencies": {
 		"bindbc-sdl": "~>1.2.4"
 	},
-	"description": "A minimal D application.",
+	"description": "Collaborative Drawing Application.",
 	"license": "proprietary",
 	"name": "graphics_project",
 	
