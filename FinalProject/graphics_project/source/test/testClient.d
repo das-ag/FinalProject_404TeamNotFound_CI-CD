@@ -156,7 +156,7 @@ unittest{
     // When the server sends 0 bytes, it means the server is closed.
     // In our code, we check if the server is closed as we lisiten for packets.
     // NOTE: Invalid memory operation Exception will be raised while running this unittest
-    // This is due to our logic where we close the socket when the server is down. (Refer to line 159 in cliend.d)
+    // This is due to our logic where we close the socket when the server is down. (Refer to line 159 in client.d)
     // However, since we are mocking the socket, it raises an exception as the mock socket cannot close.
     assert(test.isConnectedToServer == false);
     
