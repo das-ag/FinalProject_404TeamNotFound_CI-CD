@@ -1,4 +1,4 @@
-#  Collaborative Painting - 404 Team Note Found
+#  Collaborative Painting - 404 Team Not Found
 Collaborative Paint is a desktop application that allows multiple users to paint collaboratively in real-time.  It is developed by Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, and Jiayue Zhao. The Paint Factory requested this application to facilitate remote collaboration between teams. As users draw on one application, it updates in real-time on all others who have joined the session.
 
 # Demo video
@@ -59,7 +59,7 @@ If you choose not to connect to a server, you can still draw on the canvas offli
 ```bash
 dub test
 ```
-All our unittests passes. However, Invalid memory operation Exception is raised **after** the unittest are done for testNework.d as garbage collector cannot clear some variables from the client class as they are not allocated to memory due to mocking.  
+All our unittest cases pass. However, `Invalid memory operation Exception` is raised **after** the unittests are completed just for testNework.d as garbage collector cannot clear some variables from the client class as they are not allocated to the memory.
 
 We commented out the unittest on testNework.d for CI/CD purposes. Please uncomment when running the test.  
 
