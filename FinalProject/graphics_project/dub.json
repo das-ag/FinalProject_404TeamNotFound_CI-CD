@@ -56,7 +56,8 @@
 	],
 	"copyright": "Copyright © 2023, Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, Jiayue Zhao",
 	"dependencies": {
-		"bindbc-sdl": "~>1.2.4"
+		"bindbc-sdl": "~>1.2.4",
+		"dfmt": "~>0.15.0-beta.2"
 	},
 	"description": "Collaborative Drawing Application.",
 	"license": "proprietary",
