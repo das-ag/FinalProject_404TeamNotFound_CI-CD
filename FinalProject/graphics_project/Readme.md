@@ -62,7 +62,7 @@ All our unittest cases pass. However, `Invalid memory operation Exception` is ra
 
 We commented out the unittest on testNework.d for CI/CD purposes. Please uncomment when running the test.  
 
-# Building the Release executables
+## Building the Release executables
 Follow the same process as the 'How to Run' step, the only difference being the 'release flag':
 ```bash
 dub run --build=release -c=Server
@@ -72,10 +72,14 @@ dub run --build=release -c=Client
 ```
 The executable files can be found under the `FinalProject/graphics_project/.dub/build/`<Client/Server>`-release` path.
 
+## Run dfmt
+```bash
+cd FinalProject/graphics_project && find . -type f -name "*.d" -exec dub run dfmt -- -i {} \;
+```
+
 # Design Pattern
 
 To implement different types of paint brushes (e.g. heart, circle, square, spiral) we used a **factory method pattern**. We chose factory method pattern as it enables instantiation of new paint brush classes during runtime without having to define a new paint brush class everytime a user presses a button for change in paint brush type. Moreover, with the factory design pattern, adding a new paint brush type is more flexible as it is decoupled from the application's implementation.
-
 
 # Future Implementation
 - Wider range of brush colors and types
