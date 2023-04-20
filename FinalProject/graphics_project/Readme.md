@@ -2,7 +2,7 @@
 Collaborative Paint is a **Mac** desktop application that allows multiple users to paint collaboratively in real-time.  It is developed by Agastya Das, Heekyung Kim, Roydon Pereira, Jake Stringfellow, and Jiayue Zhao. The Paint Factory requested this application to facilitate remote collaboration between teams. As users draw on one application, it updates in real-time on all others who have joined the session.
 
 # Demo video
-// TODO: add demo video link
+https://youtu.be/lgigx9c_UtA
 
 # Technologies Used
 The Collaborative Paint application was developed using DLang programming language and the SDL library for graphic user interface (GUI) development. The application's build system uses Dub.
