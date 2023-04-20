@@ -7,7 +7,6 @@ module DrawStrategy;
 import Surface : Surface;
 import std.math;
 
-
 /**
 Interface for classes that implement paint brush types.
 */
@@ -28,11 +27,11 @@ interface DrawStrategy
     void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize);
 }
 
-
 /**
 Class that draws square shaped paint brush
 */
-class DrawSquareStrategy : DrawStrategy {
+class DrawSquareStrategy : DrawStrategy
+{
 
     /**
     Draws square around a given x, y coordinate.
@@ -46,23 +45,23 @@ class DrawSquareStrategy : DrawStrategy {
         b = b value of rgb to draw the pixel
         brushSize = size of square to draw around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize)
     {
-        for(int w = -brushSize; w < brushSize; w++)
+        for (int w = -brushSize; w < brushSize; w++)
         {
-            for(int h = -brushSize; h < brushSize; h++)
+            for (int h = -brushSize; h < brushSize; h++)
             {
-                winSurface.UpdateSurfacePixel(cast(int)w + xPos, cast(int)h + yPos, r, g, b);   
+                winSurface.UpdateSurfacePixel(cast(int) w + xPos, cast(int) h + yPos, r, g, b);
             }
         }
     }
 }
 
-
 /**
 Class that draws circle shaped paint brush
 */
-class DrawCircleStrategy : DrawStrategy {
+class DrawCircleStrategy : DrawStrategy
+{
 
     /**
     Draws circle around a given x, y coordinate.
@@ -76,26 +75,26 @@ class DrawCircleStrategy : DrawStrategy {
         b = b value of rgb to draw the pixel
         brushSize = size of circle to draw around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize)
     {
-        for(int y1 =- brushSize; y1 <= brushSize; y1++) 
+        for (int y1 = -brushSize; y1 <= brushSize; y1++)
         {
-            for(int x1=-brushSize; x1 <=brushSize; x1++) 
+            for (int x1 = -brushSize; x1 <= brushSize; x1++)
             {
-                if(x1 * x1 + y1 * y1 <= brushSize * brushSize) 
+                if (x1 * x1 + y1 * y1 <= brushSize * brushSize)
                 {
-                    winSurface.UpdateSurfacePixel(cast(int)y1 + xPos, cast(int)x1 + yPos, r, g, b);  
+                    winSurface.UpdateSurfacePixel(cast(int) y1 + xPos, cast(int) x1 + yPos, r, g, b);
                 }
             }
         }
     }
 }
 
-
 /**
 Class that draws heart shaped paint brush
 */
-class DrawHeartStrategy : DrawStrategy {
+class DrawHeartStrategy : DrawStrategy
+{
     /**
     Draws heart around a given x, y coordinate.
 
@@ -108,28 +107,30 @@ class DrawHeartStrategy : DrawStrategy {
         b = b value of rgb to draw the pixel
         brushSize = size of heart to draw around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) 
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize)
     {
-        for(int x1= -3 * brushSize / 2; x1 <= brushSize; x1++) 
-        {  
-            for(int y1=-3 * brushSize / 2; y1 <= 3 * brushSize / 2; y1++) 
+        for (int x1 = -3 * brushSize / 2; x1 <= brushSize; x1++)
+        {
+            for (int y1 = -3 * brushSize / 2; y1 <= 3 * brushSize / 2; y1++)
             {
-                if((abs(x1) + abs(y1) < brushSize)
-                    ||((-brushSize / 2 - x1) * (-brushSize / 2 - x1) + (brushSize / 2 - y1) * (brushSize / 2 - y1) <= brushSize * brushSize / 2)
-                    ||((-brushSize / 2 - x1) * (-brushSize / 2 - x1) + (-brushSize / 2 - y1) * (-brushSize / 2 - y1) <= brushSize * brushSize / 2))
-                        {
-                            winSurface.UpdateSurfacePixel(cast(int)y1 + xPos, cast(int)x1 + yPos, r, g, b); 
-                        }
+                if ((abs(x1) + abs(y1) < brushSize)
+                        || ((-brushSize / 2 - x1) * (-brushSize / 2 - x1) + (
+                            brushSize / 2 - y1) * (brushSize / 2 - y1) <= brushSize * brushSize / 2)
+                        || ((-brushSize / 2 - x1) * (-brushSize / 2 - x1) + (
+                            -brushSize / 2 - y1) * (-brushSize / 2 - y1) <= brushSize * brushSize / 2))
+                {
+                    winSurface.UpdateSurfacePixel(cast(int) y1 + xPos, cast(int) x1 + yPos, r, g, b);
+                }
             }
         }
     }
 }
 
-
 /**
 Class that draws spiral shaped paint brush
 */
-class DrawSpiralStrategy: DrawStrategy {
+class DrawSpiralStrategy : DrawStrategy
+{
 
     /**
     Draws spiral pattern around a given x, y coordinate.
@@ -143,7 +144,8 @@ class DrawSpiralStrategy: DrawStrategy {
         b = b value of rgb to draw the pixel
         brushSize = size of spiral to draw around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize)
+    {
         for (int y = 0; y < brushSize * 2; ++y)
         {
             for (int x = 0; x < brushSize * 2; ++x)
@@ -151,22 +153,26 @@ class DrawSpiralStrategy: DrawStrategy {
                 // reflect (x, y) to the top left quadrant as (i, j)
                 int i = x;
                 int j = y;
-                if (i >= brushSize * 2 / 2) i = brushSize * 2 - i - 1;
-                if (j >= brushSize *2 / 2) j = brushSize * 2 - j - 1;
+                if (i >= brushSize * 2 / 2)
+                    i = brushSize * 2 - i - 1;
+                if (j >= brushSize * 2 / 2)
+                    j = brushSize * 2 - j - 1;
 
                 // calculate distance from center ring
                 int u = abs(i - brushSize * 2 / 2);
-                int v = abs(j - brushSize * 2/ 2);
+                int v = abs(j - brushSize * 2 / 2);
                 int d = u > v ? u : v;
                 int L = brushSize * 2 / 2;
-                if (brushSize * 2 % 4 == 0) L--;
+                if (brushSize * 2 % 4 == 0)
+                    L--;
 
                 // fix the top-left-to-bottom-right diagonal
-                if (y == x + 1 && y <= L) d++;
+                if (y == x + 1 && y <= L)
+                    d++;
 
-                if ((d + brushSize * 2 / 2) % 2 == 0 ) 
+                if ((d + brushSize * 2 / 2) % 2 == 0)
                 {
-                    winSurface.UpdateSurfacePixel(xPos + x, yPos + y, r, g, b); 
+                    winSurface.UpdateSurfacePixel(xPos + x, yPos + y, r, g, b);
                 }
             }
 
@@ -174,11 +180,11 @@ class DrawSpiralStrategy: DrawStrategy {
     }
 }
 
-
 /**
 Class that erases pixels
 */
-class EraseStrategy : DrawStrategy {
+class EraseStrategy : DrawStrategy
+{
 
     /**
     Erases pixels around a given x, y coordinate.
@@ -193,21 +199,21 @@ class EraseStrategy : DrawStrategy {
         b = b value of rgb to erase the pixel - fixed to 0
         brushSize = size of square to erase around the given pixel
     */
-    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize) {
+    void draw(Surface* winSurface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushSize)
+    {
 
         r = 0;
         g = 0;
         b = 0;
 
         brushSize = 6;
-        
-        for(int w = -brushSize; w < brushSize; w++)
+
+        for (int w = -brushSize; w < brushSize; w++)
         {
-            for(int h = -brushSize; h < brushSize; h++)
+            for (int h = -brushSize; h < brushSize; h++)
             {
-                winSurface.UpdateSurfacePixel(cast(int)w + xPos, cast(int)h + yPos, r, g, b);   
+                winSurface.UpdateSurfacePixel(cast(int) w + xPos, cast(int) h + yPos, r, g, b);
             }
         }
     }
 }
-

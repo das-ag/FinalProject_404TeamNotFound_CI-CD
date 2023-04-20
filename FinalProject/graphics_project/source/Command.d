@@ -11,7 +11,8 @@ import std.stdio;
 /**
 Command Interface
 */
-interface Command {
+interface Command
+{
     int getXPosition();
     int getYPosition();
 }
@@ -19,15 +20,16 @@ interface Command {
 /**
 Surface operations implement command interface.
 */
-class SurfaceOperation : Command {
-    SDL_Surface* mSurface;      /// Pointer to the surface being operated on
-    int mXPosition;             /// Position on the x-axis for target pixel
-    int mYPosition;             /// Position on the y-axis for target pixel
-    ubyte mR;                   /// R value of the stored brushmark
-    ubyte mG;                   /// G value of the stored brushmark
-    ubyte mB;                   /// B value of the stored brushmark
-    ubyte mBrushType;           /// Type of paint brush the brushmark was made with (Square, circle, etc.)
-    ubyte mBrushSize;           /// Size of paint brush the brushmark was made with
+class SurfaceOperation : Command
+{
+    SDL_Surface* mSurface; /// Pointer to the surface being operated on
+    int mXPosition; /// Position on the x-axis for target pixel
+    int mYPosition; /// Position on the y-axis for target pixel
+    ubyte mR; /// R value of the stored brushmark
+    ubyte mG; /// G value of the stored brushmark
+    ubyte mB; /// B value of the stored brushmark
+    ubyte mBrushType; /// Type of paint brush the brushmark was made with (Square, circle, etc.)
+    ubyte mBrushSize; /// Size of paint brush the brushmark was made with
 
     /** 
     Constructs SurfaceOperations
@@ -41,7 +43,9 @@ class SurfaceOperation : Command {
         brushType = Type of paint brush the brushmark was made with (Square, circle, etc.)
         brushSize = Size of paint brush the brushmark was made with
     */
-    this(SDL_Surface* surface, int xPos, int yPos, ubyte r, ubyte g, ubyte b, ubyte brushType, ubyte brushSize) {
+    this(SDL_Surface* surface, int xPos, int yPos, ubyte r, ubyte g, ubyte b,
+            ubyte brushType, ubyte brushSize)
+    {
         mSurface = surface;
         mXPosition = xPos;
         mYPosition = yPos;
@@ -51,27 +55,29 @@ class SurfaceOperation : Command {
         mBrushType = brushType;
         mBrushSize = brushSize;
 
-        
     }
 
     /**
     SurfaceOperation destructor
     */
-    ~this() {
+    ~this()
+    {
 
     }
 
     /**
     Getter function for returning x-position of the command
     */
-    int getXPosition() {
+    int getXPosition()
+    {
         return mXPosition;
     }
 
     /**
     Getter function for returning y-position of the command
     */
-    int getYPosition() {
+    int getYPosition()
+    {
         return mYPosition;
     }
 }

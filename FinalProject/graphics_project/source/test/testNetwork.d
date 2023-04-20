@@ -9,9 +9,11 @@ import unit_threaded;
 
 // @Name("network")
 // @HiddenTest
-unittest{
+unittest
+{
     import std.socket;
     import unit_threaded.mock;
+
     // import core.memory;
     // GC.disable;
 

@@ -6,7 +6,8 @@ import loader = bindbc.loader.sharedlib;
 import Window : Window;
 
 @("Test Window dimensions")
-unittest{
+unittest
+{
     loadSDL();
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -19,7 +20,8 @@ unittest{
 }
 
 @("Test Window.getWindowSurface")
-unittest{
+unittest
+{
     loadSDL();
     SDL_Init(SDL_INIT_EVERYTHING);
 
